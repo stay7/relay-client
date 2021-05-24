@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:relay/constants/color.dart';
+import 'package:relay/constants/constants.dart';
 
 class GroupHeader extends StatelessWidget {
   @override
@@ -9,7 +10,7 @@ class GroupHeader extends StatelessWidget {
     return Container(
         margin: EdgeInsets.only(top: statusBarHeight),
         alignment: Alignment.topCenter,
-        height: 48,
+        height: AppConstants.HeaderSize,
         decoration: BoxDecoration(
             color: MyColor.lightGrey,
             border: Border(top: BorderSide(color: MyColor.black, width: 1))),

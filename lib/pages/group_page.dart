@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:relay/constants/types.dart';
-import 'package:relay/group_header.dart';
+import 'package:relay/header/group_header.dart';
 import 'package:relay/group_tile.dart';
 
 class GroupPage extends StatelessWidget {
@@ -19,7 +19,11 @@ class GroupList extends StatefulWidget {
 }
 
 class _GroupList extends State<GroupList> {
-  var groups = [Group("TOFEL1", 1), Group("TOFEL2", 2), Group("TOFEL3", 3)];
+  var groups = [
+    Group(title: "TOFEL1", count: 1),
+    Group(title: "TOFEL2", count: 2),
+    Group(title: "TOFEL3", count: 3),
+  ];
 
   @override
   Widget build(BuildContext context) {

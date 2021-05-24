@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AddWordPage extends StatefulWidget {
-  _AddWordPage createState() => _AddWordPage();
-}
-
-class _AddWordPage extends State<AddWordPage> {
+class AddWordHeader extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build

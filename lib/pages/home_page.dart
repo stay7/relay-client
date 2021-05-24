@@ -1,25 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:relay/appbar.dart';
+import 'package:get/instance_manager.dart';
+import 'package:relay/controller/group_controller.dart';
+import 'package:relay/header/home_header.dart';
 import 'package:relay/constants/color.dart';
 import 'package:relay/pages/group_page.dart';
 
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  var _title = 'titlde';
-
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
     final double statusBarHeight = MediaQuery.of(context).padding.top;
+    GroupController controller = Get.put(GroupController());
 
     return Scaffold(
       key: _scaffoldKey,
-      appBar: HomeAppBar(this._title, _scaffoldKey, statusBarHeight),
+      appBar: HomeAppBar(_scaffoldKey, statusBarHeight),
       drawer: GroupPage(),
       floatingActionButton: Icon(
         Icons.add_circle_outlined,
