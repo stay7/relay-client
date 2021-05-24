@@ -2,19 +2,24 @@ import 'package:flutter/material.dart';
 import 'constants/color.dart';
 
 class HomeAppBar extends StatelessWidget with PreferredSizeWidget {
-  @override
-  Size get preferredSize => new Size.fromHeight(80.0);
   final String _title;
+  var scaffoldKey;
+  Size _preferredSize = Size.fromHeight(80);
 
-  HomeAppBar(this._title);
+  @override
+  Size get preferredSize => this._preferredSize;
+
+  HomeAppBar(this._title, this.scaffoldKey);
 
   Widget build(BuildContext context) {
+    final double statusBarHeight = MediaQuery.of(context).padding.top;
+    this._preferredSize = Size.fromHeight(statusBarHeight);
+
     return PreferredSize(
       child: Align(
         alignment: Alignment.bottomCenter,
         child: Container(
             height: 48,
-            padding: EdgeInsets.only(left: 20.0, right: 20.0),
             decoration: const BoxDecoration(
               border: Border(
                   top: BorderSide(color: MyColor.black, width: 1),
@@ -23,9 +28,13 @@ class HomeAppBar extends StatelessWidget with PreferredSizeWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Icon(Icons.menu),
+                IconButton(
+                    onPressed: () {
+                      this.scaffoldKey.currentState.openDrawer();
+                    },
+                    icon: Icon(Icons.menu)),
                 Text(_title, style: TextStyle(color: MyColor.black)),
-                Icon(Icons.search)
+                IconButton(onPressed: () {}, icon: Icon(Icons.search))
               ],
             )),
       ),

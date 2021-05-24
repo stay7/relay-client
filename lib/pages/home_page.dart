@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:relay/appbar.dart';
 import 'package:relay/constants/color.dart';
+import 'package:relay/pages/group_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -13,9 +14,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+
     return Scaffold(
-      appBar: HomeAppBar(this._title),
-      drawer: Drawer(),
+      key: _scaffoldKey,
+      appBar: HomeAppBar(this._title, _scaffoldKey),
+      drawer: GroupPage(),
       floatingActionButton: Icon(
         Icons.add_circle_outlined,
         color: MyColor.black,
