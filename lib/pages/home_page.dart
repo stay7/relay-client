@@ -15,10 +15,11 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+    final double statusBarHeight = MediaQuery.of(context).padding.top;
 
     return Scaffold(
       key: _scaffoldKey,
-      appBar: HomeAppBar(this._title, _scaffoldKey),
+      appBar: HomeAppBar(this._title, _scaffoldKey, statusBarHeight),
       drawer: GroupPage(),
       floatingActionButton: Icon(
         Icons.add_circle_outlined,

@@ -3,18 +3,16 @@ import 'constants/color.dart';
 
 class HomeAppBar extends StatelessWidget with PreferredSizeWidget {
   final String _title;
-  var scaffoldKey;
-  Size _preferredSize = Size.fromHeight(80);
+  final scaffoldKey;
+  final Size _preferredSize;
 
   @override
   Size get preferredSize => this._preferredSize;
 
-  HomeAppBar(this._title, this.scaffoldKey);
+  HomeAppBar(this._title, this.scaffoldKey, double statusBarHeight)
+      : _preferredSize = Size.fromHeight(statusBarHeight);
 
   Widget build(BuildContext context) {
-    final double statusBarHeight = MediaQuery.of(context).padding.top;
-    this._preferredSize = Size.fromHeight(statusBarHeight);
-
     return PreferredSize(
       child: Align(
         alignment: Alignment.bottomCenter,
