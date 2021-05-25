@@ -8,7 +8,7 @@ class GroupController extends GetxController {
   change(Group group) {
     print(group.title);
     selectedGroup.update((val) {
-      val.title = group.title;
+      val!.title = group.title;
       val.count = group.count;
     });
   }

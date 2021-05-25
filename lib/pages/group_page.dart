@@ -9,8 +9,7 @@ class GroupPage extends StatelessWidget {
     return SizedBox.expand(
         child: Drawer(
             child: Column(
-      children: [GroupHeader(), Expanded(child: GroupList())],
-    )));
+                children: [GroupHeader(), Expanded(child: GroupList())])));
   }
 }
 
