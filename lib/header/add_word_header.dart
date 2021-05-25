@@ -1,9 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:relay/constants/color.dart';
+import 'package:relay/constants/constants.dart';
+import 'package:relay/controller/group_controller.dart';
 
 class AddWordHeader extends StatelessWidget with PreferredSizeWidget {
+  final Size _preferredSize = Size.fromHeight(AppConstants.HeaderSize);
+
+  @override
+  Size get preferredSize => this._preferredSize;
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    final statusBarHeight = MediaQuery.of(context).padding.top;
+    GroupController controller = Get.find<GroupController>();
+
+    return PreferredSize(
+        child: Container(
+          margin: EdgeInsets.only(top: statusBarHeight),
+          decoration: const BoxDecoration(
+              border: Border(
+                  top: BorderSide(color: MyColor.black),
+                  bottom: BorderSide(color: MyColor.black))),
+          child: Stack(
+            children: [
+              IconButton(
+                  onPressed: () => Navigator.pop(context),
+                  icon: Icon(
+                    Icons.arrow_back_ios_outlined,
+                    color: MyColor.black,
+                    size: 24,
+                  )),
+              Container(
+                  alignment: Alignment.center,
+                  child: Obx(
+                      () => Text('${controller.selectedGroup.value.title}')))
+            ],
+          ),
+        ),
+        preferredSize: preferredSize);
   }
 }

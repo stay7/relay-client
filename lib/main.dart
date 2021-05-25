@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:relay/constants/color.dart';
+import 'package:relay/constants/routes.dart';
 import 'package:relay/pages/addword_page.dart';
 import 'package:relay/pages/home_page.dart';
 import 'package:relay/pages/setting_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  var initialRoute = '/login';
+  var initialRoute = Routes.login;
 
   //TODO: Check login
   var isUserLoggedIn = true;
 
   if (isUserLoggedIn) {
-    initialRoute = '/home';
+    initialRoute = Routes.home;
   }
 
   runApp(MyApp(initialRoute: initialRoute));
@@ -35,9 +36,9 @@ class MyApp extends StatelessWidget {
       initialRoute: this.initialRoute,
       routes: {
         // '/login': (context) => LoginPage(),
-        '/home': (context) => HomePage(),
-        '/add_word': (context) => AddWordPage(),
-        '/setting': (context) => SettingPage(),
+        Routes.home: (context) => HomePage(),
+        Routes.addWord: (context) => AddWordPage(),
+        Routes.setting: (context) => SettingPage(),
       },
     );
   }
