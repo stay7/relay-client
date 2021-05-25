@@ -15,7 +15,7 @@ class HomeAppBar extends StatelessWidget with PreferredSizeWidget {
   final controller = Get.find<GroupController>();
 
   HomeAppBar(this.scaffoldKey, double statusBarHeight)
-      : _preferredSize = Size.fromHeight(statusBarHeight);
+      : _preferredSize = Size.fromHeight(AppConstants.HeaderSize);
 
   Widget build(BuildContext context) {
     return PreferredSize(
