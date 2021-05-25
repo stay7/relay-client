@@ -7,22 +7,22 @@ import 'package:relay/pages/setting_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  var initialRoute = 'login';
+  var initialRoute = '/login';
 
   //TODO: Check login
   var isUserLoggedIn = true;
 
   if (isUserLoggedIn) {
-    initialRoute = 'home';
+    initialRoute = '/home';
   }
 
-  runApp(MyApp(initialRoute));
+  runApp(MyApp(initialRoute: initialRoute));
 }
 
 class MyApp extends StatelessWidget {
   final String initialRoute;
 
-  MyApp(this.initialRoute);
+  MyApp({required this.initialRoute});
 
   @override
   Widget build(BuildContext context) {
