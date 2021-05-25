@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:relay/constants/color.dart';
 import 'package:relay/constants/routes.dart';
 import 'package:relay/pages/addword_page.dart';
@@ -32,7 +32,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           brightness: Brightness.light,
           primaryColor: MyColor.black,
-          backgroundColor: MyColor.lightGrey),
+          backgroundColor: MyColor.lightGrey,
+          inputDecorationTheme: InputDecorationTheme(
+            border: UnderlineInputBorder(
+                borderSide: BorderSide(color: MyColor.grey, width: 1.5)),
+            focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: MyColor.blue, width: 1.5)),
+            contentPadding: EdgeInsets.only(left: 10),
+            hintStyle: TextStyle(color: MyColor.grey, fontSize: 16),
+          )),
       initialRoute: this.initialRoute,
       routes: {
         // '/login': (context) => LoginPage(),
