@@ -38,9 +38,12 @@ class _AddWordPage extends State<AddWordPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                '추가할 단어를 입력하세요',
-                style: TextStyle(color: MyColor.black, fontSize: 18),
+              Container(
+                margin: EdgeInsets.only(bottom: 50),
+                child: Text(
+                  '추가할 단어를 입력하세요',
+                  style: TextStyle(color: MyColor.black, fontSize: 18),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 24),
@@ -77,25 +80,54 @@ class _AddWordPage extends State<AddWordPage> {
                 ),
               ),
               Padding(
-                  padding: const EdgeInsets.only(bottom: 24),
-                  child: TextField(
-                    controller: usageController,
-                    onChanged: (String value) {
-                      setState(() => _textUsage = value);
-                    },
-                    decoration: InputDecoration(
-                      hintText: '예시',
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: getBorderColor(_textUsage),
+                padding: const EdgeInsets.only(bottom: 24),
+                child: TextField(
+                  controller: usageController,
+                  onChanged: (String value) {
+                    setState(() => _textUsage = value);
+                  },
+                  decoration: InputDecoration(
+                    hintText: '예시',
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: getBorderColor(_textUsage),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 10),
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints.tightFor(height: 50),
+                        child: ElevatedButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: Text(
+                            "저장",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            primary: MyColor.black,
+                            onPrimary: MyColor.white,
+                            shape: new RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  )
+                  ],
+                ),
               ),
             ],
           ),
-        ),),)
+        ),
+      ),
     );
   }
 }

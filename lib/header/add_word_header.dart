@@ -19,9 +19,10 @@ class AddWordHeader extends StatelessWidget with PreferredSizeWidget {
         child: Container(
           margin: EdgeInsets.only(top: statusBarHeight),
           decoration: const BoxDecoration(
-              border: Border(
-                  top: BorderSide(color: MyColor.black),
-                  bottom: BorderSide(color: MyColor.black))),
+            border: Border(
+              top: BorderSide(color: MyColor.black),
+            ),
+          ),
           child: Stack(
             children: [
               IconButton(
@@ -32,9 +33,14 @@ class AddWordHeader extends StatelessWidget with PreferredSizeWidget {
                     size: 24,
                   )),
               Container(
-                  alignment: Alignment.center,
-                  child: Obx(
-                      () => Text('${controller.selectedGroup.value.title}')))
+                alignment: Alignment.center,
+                child: Obx(
+                  () => Text(
+                    '${controller.selectedGroup.value.title}',
+                    style: TextStyle(fontSize: 18, color: MyColor.black),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
