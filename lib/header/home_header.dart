@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/instance_manager.dart';
-import 'package:relay/constants/constants.dart';
+import 'package:relay/config/color.dart';
+import 'package:relay/config/config.dart';
 import 'package:relay/controller/group_controller.dart';
-import '../constants/color.dart';
 
 class HomeAppBar extends StatelessWidget with PreferredSizeWidget {
   final scaffoldKey;
@@ -15,14 +15,14 @@ class HomeAppBar extends StatelessWidget with PreferredSizeWidget {
   final controller = Get.find<GroupController>();
 
   HomeAppBar(this.scaffoldKey)
-      : _preferredSize = Size.fromHeight(AppConstants.HeaderSize);
+      : _preferredSize = Size.fromHeight(AppConfig.HeaderSize);
 
   Widget build(BuildContext context) {
     return PreferredSize(
       child: Align(
         alignment: Alignment.bottomCenter,
         child: Container(
-            height: AppConstants.HeaderSize,
+            height: AppConfig.HeaderSize,
             decoration: const BoxDecoration(
               border: Border(
                   top: BorderSide(color: MyColor.black, width: 1),

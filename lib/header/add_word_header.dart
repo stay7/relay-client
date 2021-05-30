@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:relay/constants/color.dart';
-import 'package:relay/constants/constants.dart';
+import 'package:relay/config/color.dart';
+import 'package:relay/config/config.dart';
 import 'package:relay/controller/group_controller.dart';
 
 class AddWordHeader extends StatelessWidget with PreferredSizeWidget {
-  final Size _preferredSize = Size.fromHeight(AppConstants.HeaderSize);
+  final Size _preferredSize = Size.fromHeight(AppConfig.HeaderSize);
 
   @override
   Size get preferredSize => this._preferredSize;

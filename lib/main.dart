@@ -2,8 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:relay/constants/color.dart';
 import 'package:relay/constants/routes.dart';
-import 'package:relay/pages/addword_page.dart';
+import 'package:relay/pages/add_word_page.dart';
 import 'package:relay/pages/home_page.dart';
+import 'package:relay/pages/login_page.dart';
 import 'package:relay/pages/setting_page.dart';
 
 void main() async {
@@ -11,7 +12,7 @@ void main() async {
   var initialRoute = Routes.login;
 
   //TODO: Check login
-  var isUserLoggedIn = true;
+  var isUserLoggedIn = false;
 
   if (isUserLoggedIn) {
     initialRoute = Routes.home;
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
           )),
       initialRoute: this.initialRoute,
       routes: {
-        // '/login': (context) => LoginPage(),
+        Routes.login: (context) => LoginPage(),
         Routes.home: (context) => HomePage(),
         Routes.addWord: (context) => AddWordPage(),
         Routes.setting: (context) => SettingPage(),

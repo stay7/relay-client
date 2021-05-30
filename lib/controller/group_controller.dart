@@ -1,6 +1,6 @@
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/state_manager.dart';
-import 'package:relay/constants/types.dart';
+import 'package:relay/types/group.dart';
 
 class GroupController extends GetxController {
   var selectedGroup = Group(title: "test group").obs;

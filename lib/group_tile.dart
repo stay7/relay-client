@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
-import 'package:relay/constants/color.dart';
-import 'package:relay/constants/types.dart';
+import 'package:relay/config/color.dart';
 import 'package:relay/controller/group_controller.dart';
+import 'package:relay/types/group.dart';
 
 class GroupTile extends StatefulWidget {
   Group groupData;

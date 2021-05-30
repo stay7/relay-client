@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:relay/constants/types.dart';
-import 'package:relay/header/group_header.dart';
 import 'package:relay/group_tile.dart';
+import 'package:relay/header/group_header.dart';
+import 'package:relay/types/group.dart';
 
 class GroupPage extends StatelessWidget {
   @override
