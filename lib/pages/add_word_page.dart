@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:relay/constants/color.dart';
+import 'package:relay/config/color.dart';
 import 'package:relay/header/add_word_header.dart';
 
 class AddWordPage extends StatefulWidget {

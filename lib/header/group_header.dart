@@ -18,13 +18,14 @@ class GroupHeader extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: Icon(
-                  Icons.close,
-                  size: 24,
-                )),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(
+                Icons.close,
+                size: 24,
+              ),
+            ),
             IconButton(onPressed: () {}, icon: Icon(Icons.settings, size: 24))
           ],
         ));

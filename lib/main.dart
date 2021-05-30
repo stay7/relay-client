@@ -1,31 +1,21 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:relay/constants/color.dart';
-import 'package:relay/constants/routes.dart';
+import 'package:relay/config/color.dart';
+import 'package:relay/config/routes.dart';
 import 'package:relay/pages/add_word_page.dart';
 import 'package:relay/pages/home_page.dart';
 import 'package:relay/pages/login_page.dart';
 import 'package:relay/pages/setting_page.dart';
+import 'package:relay/pages/splash_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  var initialRoute = Routes.login;
-
-  //TODO: Check login
-  var isUserLoggedIn = false;
-
-  if (isUserLoggedIn) {
-    initialRoute = Routes.home;
-  }
-
-  runApp(MyApp(initialRoute: initialRoute));
+  await Firebase.initializeApp();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final String initialRoute;
-
-  MyApp({required this.initialRoute});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -42,8 +32,9 @@ class MyApp extends StatelessWidget {
             contentPadding: EdgeInsets.only(left: 10),
             hintStyle: TextStyle(color: MyColor.grey, fontSize: 16),
           )),
-      initialRoute: this.initialRoute,
+      initialRoute: Routes.splash,
       routes: {
+        Routes.splash: (context) => SplashPage(),
         Routes.login: (context) => LoginPage(),
         Routes.home: (context) => HomePage(),
         Routes.addWord: (context) => AddWordPage(),

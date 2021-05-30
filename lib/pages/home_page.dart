@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
-import 'package:relay/constants/color.dart';
-import 'package:relay/constants/routes.dart';
+import 'package:relay/config/color.dart';
+import 'package:relay/config/routes.dart';
 import 'package:relay/controller/group_controller.dart';
 import 'package:relay/header/home_header.dart';
 import 'package:relay/pages/group_page.dart';

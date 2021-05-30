@@ -1,5 +1,9 @@
-import 'package:firebase_core/firebase_core.dart';
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:relay/config/config.dart';
+import 'package:relay/pages/login_page.dart';
 
 class SplashPage extends StatefulWidget {
   @override
@@ -10,20 +14,21 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    displaySplash();
+    Timer(Duration(seconds: AppConfig.SplashDuration), navigate);
   }
 
-  displaySplash() {
-    Timer(Duration(seconds: 2), () async {
-      Firebase.initializeApp();
-      //login 되어있으면 homepage
-      //login 없으면 loginpage로 보내는 로직은 여기
-    });
+  navigate() {
+    // if (isUser) {
+    // Route route = MaterialPageRoute(builder: (_) => HomePage());
+    // Navigator.pushReplacement(context, route);
+    // } else {
+    Route route = MaterialPageRoute(builder: (context) => LoginPage());
+    Navigator.pushReplacement(context, route);
+    // }
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return Image.asset("images/welcome.png");
   }
 }

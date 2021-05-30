@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "412630912400",
+    "project_id": "relay-314412",
+    "storage_bucket": "relay-314412.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:412630912400:android:9e96bc707e707bfc25b715",
+        "android_client_info": {
+          "package_name": "com.stay7.relay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "412630912400-t1tg7e7424qaacafggfo6n04sm3b4hfb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.stay7.relay",
+            "certificate_hash": "9977d7cfa05017ed19053609c1877251937b193f"
+          }
+        },
+        {
+          "client_id": "412630912400-dq341v3d211fjr7b6btfsfkvvckrk93b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoghHGiJbFIBEfPqQNQtdPOAVS8AC184Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "412630912400-dq341v3d211fjr7b6btfsfkvvckrk93b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "412630912400-lsngo59q4ii3hr00kls7f9oi4sovia0n.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.stay7.relay"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
