@@ -24,7 +24,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: AppConfig.SplashDuration), navigate());
+    Timer(Duration(seconds: AppConfig.SplashDuration), () => navigate());
   }
 
   @override
