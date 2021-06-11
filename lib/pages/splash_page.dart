@@ -11,12 +11,6 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  @override
-  void initState() {
-    super.initState();
-    Timer(Duration(seconds: AppConfig.SplashDuration), navigate);
-  }
-
   navigate() {
     // if (isUser) {
     // Route route = MaterialPageRoute(builder: (_) => HomePage());
@@ -25,6 +19,12 @@ class _SplashPageState extends State<SplashPage> {
     Route route = MaterialPageRoute(builder: (context) => LoginPage());
     Navigator.pushReplacement(context, route);
     // }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Timer(Duration(seconds: AppConfig.SplashDuration), navigate());
   }
 
   @override
