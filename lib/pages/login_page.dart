@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:relay/components/social_login_button.dart';
+import 'package:relay/types/social_provider.dart';
 
 class LoginPage extends StatelessWidget {
   // signInWithGoogle() async {}
@@ -11,7 +13,10 @@ class LoginPage extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            ElevatedButton(onPressed: () {}, child: const Text('sign in'))
+            SocialLoginButton(provider: SocialProvider.GOOGLE),
+            SocialLoginButton(provider: SocialProvider.FACEBOOK),
+            SocialLoginButton(provider: SocialProvider.KAKAO),
+            SocialLoginButton(provider: SocialProvider.APPLE)
           ],
         ),
       ),
