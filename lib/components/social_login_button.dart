@@ -1,15 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_web_auth/flutter_web_auth.dart';
+import 'package:relay/controller/login_controller.dart';
 import 'package:relay/types/social_provider.dart';
 
 class SocialLoginButton extends StatelessWidget {
   SocialLoginButton({@required provider})
       : assetName = getAssetName(provider),
-        handlePress = getHandlePress(provider);
+        url = getUrl(provider);
 
   final String assetName;
-  final VoidCallback handlePress;
+  final String url;
 
   static String getAssetName(SocialProvider provider) {
     switch (provider) {
@@ -24,16 +26,29 @@ class SocialLoginButton extends StatelessWidget {
     }
   }
 
-  static VoidCallback getHandlePress(SocialProvider provider) {
+  onPress(url) async {
+    final result =
+        await FlutterWebAuth.authenticate(url: url, callbackUrlScheme: "relay");
+    final body = Uri.parse(result).queryParameters;
+    final id = body['id'];
+    final code = body['code'];
+    final loginResult = await LoginController().login(id, code);
+    await LoginController()
+        .saveToken(loginResult.accessToken, loginResult.refreshToken);
+    final tokens = await LoginController().loadToken();
+    print(tokens);
+  }
+
+  static String getUrl(SocialProvider provider) {
     switch (provider) {
       case SocialProvider.GOOGLE:
-        return () {};
+        return 'http://localhost:3000/auth/google';
       case SocialProvider.APPLE:
-        return () {};
+        return 'http://localhost:3000/auth/apple';
       case SocialProvider.FACEBOOK:
-        return () {};
+        return 'http://localhost:3000/auth/facebook';
       case SocialProvider.KAKAO:
-        return () {};
+        return 'http://localhost:3000/auth/kakao';
     }
   }
 
@@ -41,7 +56,7 @@ class SocialLoginButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         child: TextButton(
-      onPressed: handlePress,
+      onPressed: () => onPress(url),
       child: SvgPicture.asset(assetName),
     ));
   }

@@ -16,7 +16,7 @@ class LoginPage extends StatelessWidget {
             SocialLoginButton(provider: SocialProvider.GOOGLE),
             SocialLoginButton(provider: SocialProvider.FACEBOOK),
             SocialLoginButton(provider: SocialProvider.KAKAO),
-            SocialLoginButton(provider: SocialProvider.APPLE)
+            SocialLoginButton(provider: SocialProvider.APPLE),
           ],
         ),
       ),
