@@ -8,10 +8,12 @@ import 'package:relay/pages/home_page.dart';
 import 'package:relay/pages/login_page.dart';
 import 'package:relay/pages/setting_page.dart';
 import 'package:relay/pages/splash_page.dart';
+import 'package:relay/provider/preference_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await PreferenceProvider().init();
   runApp(MyApp());
 }
 
