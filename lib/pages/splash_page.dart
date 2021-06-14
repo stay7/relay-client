@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:relay/config/config.dart';
 import 'package:relay/pages/login_page.dart';
 import 'package:relay/provider/preference_provider.dart';
+import 'package:relay/provider/request_provider.dart';
 
 class SplashPage extends StatefulWidget {
   @override
@@ -19,7 +20,7 @@ class _SplashPageState extends State<SplashPage> {
   navigate() {
     final tokens = checkSession();
     final accessToken = tokens[0], refreshToken = tokens[1];
-    print({accessToken, refreshToken});
+    RequestProvider().setTokens(accessToken, refreshToken);
 
     // if (isUser) {
     // Route route = MaterialPageRoute(builder: (_) => HomePage());

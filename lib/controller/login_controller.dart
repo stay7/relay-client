@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:http/http.dart' as http;
 import 'package:relay/provider/device_provider.dart';
+import 'package:relay/provider/request_provider.dart';
 
 class LoginController {
   /*
@@ -13,15 +13,22 @@ class LoginController {
   factory LoginController() => _loginController;
   LoginController._internal();
 
-  checkLoggedIn(accessToken, refreshToken) async {}
-
   login(id, code) async {
-    var deviceInfo = await DeviceProvider.getDeviceDetails();
+    RequestProvider request = RequestProvider();
+    Uri uri = Uri.parse('${RequestProvider.baseUrl}/auth/login');
 
-    final response = await http.post(
-        Uri.parse('http://localhost:3000/auth/login'),
+    final response = await request.post(uri,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $code'},
-        body: {'id': '$id', 'deviceId': deviceInfo[2]});
+        body: {'id': '$id', 'deviceId': DeviceProvider.deviceId});
+    final responseJson = jsonDecode(response.body);
+    return responseJson;
+  }
+
+  checkLoggedIn(accessToken, refreshToken) async {
+    RequestProvider request = RequestProvider();
+    Uri uri = Uri.parse('${RequestProvider.baseUrl}/auth/');
+
+    final response = await request.post(uri, body: {});
     final responseJson = jsonDecode(response.body);
     return responseJson;
   }

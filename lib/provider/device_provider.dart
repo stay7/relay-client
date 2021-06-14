@@ -9,28 +9,26 @@ class DeviceProvider {
   factory DeviceProvider() => _deviceController;
   DeviceProvider._internal();
 
-  static Future<List<String>> getDeviceDetails() async {
-    String deviceName = '';
-    String deviceVersion = '';
-    String identifier = '';
+  static String deviceName = '';
+  static String deviceVersion = '';
+  static String deviceId = '';
 
+  Future<void> loadDeviceInfo() async {
     final DeviceInfoPlugin deviceInfoPlugin = new DeviceInfoPlugin();
     try {
       if (Platform.isAndroid) {
         var build = await deviceInfoPlugin.androidInfo;
         deviceName = build.model;
         deviceVersion = build.version.toString();
-        identifier = build.androidId; //UUID for Android
+        deviceId = build.androidId; //UUID for Android
       } else if (Platform.isIOS) {
         var data = await deviceInfoPlugin.iosInfo;
         deviceName = data.name;
         deviceVersion = data.systemVersion;
-        identifier = data.identifierForVendor; //UUID for iOS
+        deviceId = data.identifierForVendor; //UUID for iOS
       }
     } on PlatformException {
       print('Failed to get platform version');
     }
-
-    return [deviceName, deviceVersion, identifier];
   }
 }
