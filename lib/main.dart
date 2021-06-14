@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:relay/config/color.dart';
 import 'package:relay/config/routes.dart';
 import 'package:relay/pages/add_word_page.dart';
@@ -11,9 +12,13 @@ import 'package:relay/pages/splash_page.dart';
 import 'package:relay/provider/preference_provider.dart';
 
 void main() async {
+  const envPath = String.fromEnvironment("ENV", defaultValue: "env/.env_prod");
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await PreferenceProvider().init();
+  await dotenv.load(fileName: envPath);
+
   runApp(MyApp());
 }
 

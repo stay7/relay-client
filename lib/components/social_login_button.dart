@@ -17,13 +17,13 @@ class SocialLoginButton extends StatelessWidget {
   static String getAssetName(SocialProvider provider) {
     switch (provider) {
       case SocialProvider.GOOGLE:
-        return 'images/google.svg';
+        return 'assets/images/google.svg';
       case SocialProvider.APPLE:
-        return 'images/apple.svg';
+        return 'assets/images/apple.svg';
       case SocialProvider.FACEBOOK:
-        return 'images/facebook.svg';
+        return 'assets/images/facebook.svg';
       case SocialProvider.KAKAO:
-        return 'images/kakao.svg';
+        return 'assets/images/kakao.svg';
     }
   }
 
@@ -37,6 +37,8 @@ class SocialLoginButton extends StatelessWidget {
     final tokenJson = await LoginController().login(id, code);
     final accessToken = tokenJson['accessToken'],
         refreshToken = tokenJson['refreshToken'];
+
+    print(accessToken);
 
     await PreferenceProvider().saveToken(accessToken, refreshToken);
   }

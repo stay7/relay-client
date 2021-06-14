@@ -17,7 +17,7 @@ class PreferenceProvider {
     await _sharedPref!.setString(PreferenceKey.RefreshToken, refreshToken);
   }
 
-  loadToken() async {
+  loadToken() {
     final accessToken = _sharedPref!.getString(PreferenceKey.AccessToken);
     final refreshToken = _sharedPref!.getString(PreferenceKey.RefreshToken);
     return [accessToken, refreshToken];

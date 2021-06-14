@@ -13,6 +13,8 @@ class LoginController {
   factory LoginController() => _loginController;
   LoginController._internal();
 
+  checkLoggedIn(accessToken, refreshToken) async {}
+
   login(id, code) async {
     var deviceInfo = await DeviceProvider.getDeviceDetails();
 

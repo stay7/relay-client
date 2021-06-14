@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:relay/config/config.dart';
 import 'package:relay/pages/login_page.dart';
+import 'package:relay/provider/preference_provider.dart';
 
 class SplashPage extends StatefulWidget {
   @override
@@ -11,7 +12,15 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  checkSession() {
+    return PreferenceProvider().loadToken();
+  }
+
   navigate() {
+    final tokens = checkSession();
+    final accessToken = tokens[0], refreshToken = tokens[1];
+    print({accessToken, refreshToken});
+
     // if (isUser) {
     // Route route = MaterialPageRoute(builder: (_) => HomePage());
     // Navigator.pushReplacement(context, route);
@@ -29,6 +38,6 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset("images/welcome.png");
+    return Image.asset("assets/images/welcome.png");
   }
 }
