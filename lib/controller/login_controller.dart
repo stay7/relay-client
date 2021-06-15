@@ -18,21 +18,21 @@ class LoginController extends GetxController {
 
   @override
   onInit() {
-    print('loggin controller onInit()');
     PreferenceProvider().loadToken();
     ever(isLogged, fireRoute);
-    Future.delayed(Duration(milliseconds: AppConfig.SplashDuration), () {
-      isLogged.value = PreferenceProvider().hasToken();
-    });
+    Future.delayed(Duration(milliseconds: AppConfig.SplashDuration),
+        () => checkLoggedIn());
     super.onInit();
   }
 
   fireRoute(logged) {
-    print('fireRoute');
+    print('session $logged');
+
     if (logged) {
       Get.offNamed(Routes.home);
-    } else
+    } else {
       Get.offAllNamed(Routes.login);
+    }
   }
 
   login(id, code) async {
@@ -42,16 +42,12 @@ class LoginController extends GetxController {
     final response = await request.post(uri,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $code'},
         body: {'id': '$id', 'deviceId': DeviceProvider.deviceId});
+    print(response.body);
     final responseJson = jsonDecode(response.body);
     return responseJson;
   }
 
-  checkLoggedIn(accessToken, refreshToken) async {
-    RequestProvider request = RequestProvider();
-    Uri uri = Uri.parse('${RequestProvider.baseUrl}/auth/');
-
-    final response = await request.post(uri, body: {});
-    final responseJson = jsonDecode(response.body);
-    return responseJson;
+  checkLoggedIn() {
+    isLogged.value = PreferenceProvider().hasToken();
   }
 }

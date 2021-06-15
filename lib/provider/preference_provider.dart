@@ -27,7 +27,10 @@ class PreferenceProvider {
     return _accessToken.isNotEmpty && _refreshToken.isNotEmpty;
   }
 
-  saveToken(accessToken, refreshToken) async {
+  saveToken(String? accessToken, String? refreshToken) async {
+    print({accessToken, refreshToken});
+    if (accessToken == null || refreshToken == null) return;
+
     await _sharedPref!.setString(PreferenceKey.AccessToken, accessToken);
     await _sharedPref!.setString(PreferenceKey.RefreshToken, refreshToken);
     setTokens(accessToken, refreshToken);
@@ -36,8 +39,9 @@ class PreferenceProvider {
   loadToken() {
     var accessToken = _sharedPref!.getString(PreferenceKey.AccessToken);
     var refreshToken = _sharedPref!.getString(PreferenceKey.RefreshToken);
-    if (accessToken == null) accessToken = '';
-    if (refreshToken == null) refreshToken = '';
+
+    if (accessToken == null || refreshToken == null) return ['', ''];
+
     setTokens(accessToken, refreshToken);
     return [accessToken, refreshToken];
   }

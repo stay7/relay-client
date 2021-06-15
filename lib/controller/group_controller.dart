@@ -1,15 +1,29 @@
+import 'dart:convert';
+
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/state_manager.dart';
+import 'package:relay/provider/request_provider.dart';
 import 'package:relay/types/group.dart';
 
 class GroupController extends GetxController {
-  var selectedGroup = Group(title: "test group").obs;
+  Rx<Group>? selectedGroup;
+  RxList<Group>? groups;
 
-  change(Group group) {
-    print(group.title);
-    selectedGroup.update((val) {
-      val!.title = group.title;
-      val.count = group.count;
-    });
+  @override
+  onInit() {
+    super.onInit();
+  }
+
+  getGroups() async {
+    final RequestProvider request = RequestProvider();
+    Uri uri = Uri.parse('${RequestProvider.baseUrl}/group');
+    final response = await request.get(uri);
+    final responseJson = jsonDecode(response.body);
+    print(responseJson);
+    // this.groups = responseJson.gGroup.fromJson();
+  }
+
+  select(Group group) {
+    selectedGroup!(group);
   }
 }

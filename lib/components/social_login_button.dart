@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:relay/controller/login_controller.dart';
-import 'package:relay/controller/user_controller.dart';
 import 'package:relay/provider/preference_provider.dart';
-import 'package:relay/provider/request_provider.dart';
 import 'package:relay/types/social_provider.dart';
 
 class SocialLoginButton extends StatelessWidget {
@@ -41,7 +39,7 @@ class SocialLoginButton extends StatelessWidget {
         refreshToken = tokenJson['refreshToken'];
 
     await PreferenceProvider().saveToken(accessToken, refreshToken);
-    await UserController().getUser();
+    LoginController().checkLoggedIn();
   }
 
   static String getUrl(SocialProvider provider) {
