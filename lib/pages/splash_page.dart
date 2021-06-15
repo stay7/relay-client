@@ -1,41 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:relay/config/config.dart';
-import 'package:relay/pages/login_page.dart';
-import 'package:relay/provider/preference_provider.dart';
-import 'package:relay/provider/request_provider.dart';
+import 'package:get/instance_manager.dart';
+import 'package:relay/controller/login_controller.dart';
 
-class SplashPage extends StatefulWidget {
-  @override
-  _SplashPageState createState() => _SplashPageState();
-}
-
-class _SplashPageState extends State<SplashPage> {
-  checkSession() {
-    return PreferenceProvider().loadToken();
-  }
-
-  navigate() {
-    final tokens = checkSession();
-    final accessToken = tokens[0], refreshToken = tokens[1];
-    RequestProvider().setTokens(accessToken, refreshToken);
-
-    // if (isUser) {
-    // Route route = MaterialPageRoute(builder: (_) => HomePage());
-    // Navigator.pushReplacement(context, route);
-    // } else {
-    Route route = MaterialPageRoute(builder: (context) => LoginPage());
-    Navigator.pushReplacement(context, route);
-    // }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    Timer(Duration(seconds: AppConfig.SplashDuration), () => navigate());
-  }
+class SplashPage extends StatelessWidget {
+  final LoginController controller = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:get/instance_manager.dart';
+import 'package:get/get.dart';
 import 'package:relay/config/color.dart';
 import 'package:relay/config/config.dart';
 import 'package:relay/controller/group_controller.dart';
 
 class HomeAppBar extends StatelessWidget with PreferredSizeWidget {
-  final scaffoldKey;
   final Size _preferredSize;
 
   @override
@@ -14,8 +12,7 @@ class HomeAppBar extends StatelessWidget with PreferredSizeWidget {
 
   final controller = Get.find<GroupController>();
 
-  HomeAppBar(this.scaffoldKey)
-      : _preferredSize = Size.fromHeight(AppConfig.HeaderSize);
+  HomeAppBar() : _preferredSize = Size.fromHeight(AppConfig.HeaderSize);
 
   Widget build(BuildContext context) {
     return PreferredSize(
@@ -33,11 +30,12 @@ class HomeAppBar extends StatelessWidget with PreferredSizeWidget {
               children: <Widget>[
                 IconButton(
                     onPressed: () {
-                      this.scaffoldKey.currentState.openDrawer();
+                      // this.scaffoldKey.currentState.openDrawer();
+                      Scaffold.of(context).openDrawer();
                     },
                     icon: Icon(Icons.menu)),
-                Obx(() => Text('${controller.selectedGroup.value.title}',
-                    style: TextStyle(color: MyColor.black))),
+                // Obx(() => Text('${controller.selectedGroup.value.title}',
+                //     style: TextStyle(color: MyColor.black))),
                 IconButton(onPressed: () {}, icon: Icon(Icons.search))
               ],
             )),

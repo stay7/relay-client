@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:get/get.dart';
 import 'package:relay/config/color.dart';
 import 'package:relay/config/routes.dart';
 import 'package:relay/pages/add_word_page.dart';
@@ -26,7 +27,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'relay',
       theme: ThemeData(
           brightness: Brightness.light,
@@ -41,13 +42,16 @@ class MyApp extends StatelessWidget {
             hintStyle: TextStyle(color: MyColor.grey, fontSize: 16),
           )),
       initialRoute: Routes.splash,
-      routes: {
-        Routes.splash: (context) => SplashPage(),
-        Routes.login: (context) => LoginPage(),
-        Routes.home: (context) => HomePage(),
-        Routes.addWord: (context) => AddWordPage(),
-        Routes.setting: (context) => SettingPage(),
-      },
+      getPages: [
+        GetPage(name: Routes.splash, page: () => SplashPage()),
+        GetPage(name: Routes.login, page: () => LoginPage()),
+        GetPage(name: Routes.home, page: () => HomePage()),
+        GetPage(name: Routes.addWord, page: () => AddWordPage()),
+        GetPage(
+            name: Routes.setting,
+            page: () => SettingPage(),
+            transition: Transition.downToUp)
+      ],
     );
   }
 }

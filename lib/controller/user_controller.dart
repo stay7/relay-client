@@ -1,8 +1,11 @@
 import 'dart:convert';
 
+import 'package:get/get.dart';
 import 'package:relay/provider/request_provider.dart';
+import 'package:relay/types/user.dart';
 
-class UserController {
+class UserController extends GetxController {
+  Rx<User>? user;
   static final UserController _userController = UserController.internal();
 
   factory UserController() => _userController;
@@ -13,6 +16,7 @@ class UserController {
     Uri uri = Uri.parse('${RequestProvider.baseUrl}/user');
     final response = await request.get(uri);
     final responseJson = jsonDecode(response.body);
-    print(responseJson);
+    this.user = User.fromJson(responseJson).obs;
+    return this.user;
   }
 }

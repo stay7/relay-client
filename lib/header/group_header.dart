@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:relay/config/color.dart';
 import 'package:relay/config/config.dart';
 
@@ -18,9 +19,7 @@ class GroupHeader extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
+              onPressed: () => Get.back(),
               icon: Icon(
                 Icons.close,
                 size: 24,

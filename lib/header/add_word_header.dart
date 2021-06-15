@@ -26,7 +26,7 @@ class AddWordHeader extends StatelessWidget with PreferredSizeWidget {
           child: Stack(
             children: [
               IconButton(
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: () => Get.back(),
                   icon: Icon(
                     Icons.arrow_back_ios_outlined,
                     color: MyColor.black,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 import 'package:relay/config/color.dart';
 import 'package:relay/header/add_word_header.dart';
 
@@ -106,7 +107,7 @@ class _AddWordPage extends State<AddWordPage> {
                       child: ConstrainedBox(
                         constraints: BoxConstraints.tightFor(height: 50),
                         child: ElevatedButton(
-                          onPressed: () => Navigator.pop(context),
+                          onPressed: () => Get.back(),
                           child: Text(
                             "저장",
                             style: TextStyle(fontSize: 18),

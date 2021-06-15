@@ -39,9 +39,8 @@ class SocialLoginButton extends StatelessWidget {
     final tokenJson = await LoginController().login(id, code);
     final accessToken = tokenJson['accessToken'],
         refreshToken = tokenJson['refreshToken'];
-    print(accessToken);
+
     await PreferenceProvider().saveToken(accessToken, refreshToken);
-    RequestProvider().setTokens(accessToken, refreshToken);
     await UserController().getUser();
   }
 
