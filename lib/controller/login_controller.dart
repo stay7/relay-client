@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
+import 'package:http/http.dart' as http;
 import 'package:relay/config/config.dart';
 import 'package:relay/config/routes.dart';
 import 'package:relay/provider/device_provider.dart';
@@ -36,18 +37,31 @@ class LoginController extends GetxController {
   }
 
   login(id, code) async {
-    RequestProvider request = RequestProvider();
     Uri uri = Uri.parse('${RequestProvider.baseUrl}/auth/login');
 
-    final response = await request.post(uri,
+    final response = await http.post(uri,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $code'},
         body: {'id': '$id', 'deviceId': DeviceProvider.deviceId});
-    print(response.body);
+
     final responseJson = jsonDecode(response.body);
     return responseJson;
   }
 
+  logout() async {
+    await PreferenceProvider().deleteToken();
+    isLogged.value = false;
+  }
+
   checkLoggedIn() {
     isLogged.value = PreferenceProvider().hasToken();
+  }
+
+  renewAccessToken() async {
+    final refreshToken = PreferenceProvider().getRefreshToken();
+    Uri uri = Uri.parse('${RequestProvider.baseUrl}/auth/renew');
+    final response = await http.post(uri, body: {'refreshToken': refreshToken});
+    final responseJson = RequestProvider.returnResponse(response);
+    final accessToken = responseJson['accessToken'];
+    await PreferenceProvider().saveToken(accessToken, refreshToken);
   }
 }

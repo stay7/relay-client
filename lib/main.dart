@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
@@ -14,6 +17,11 @@ import 'package:relay/provider/device_provider.dart';
 import 'package:relay/provider/preference_provider.dart';
 
 void main() async {
+  FlutterError.onError = (FlutterErrorDetails details) {
+    FlutterError.dumpErrorToConsole(details);
+    if (kReleaseMode) exit(1);
+  };
+
   const envPath = String.fromEnvironment("ENV", defaultValue: "env/.env_prod");
   await dotenv.load(fileName: envPath);
   await DeviceProvider().loadDeviceInfo();
@@ -52,6 +60,13 @@ class MyApp extends StatelessWidget {
             page: () => SettingPage(),
             transition: Transition.downToUp)
       ],
+      builder: (BuildContext context, Widget? widget) {
+        Widget error = Text('...rendering error...');
+        if (widget is Scaffold || widget is Navigator)
+          error = Scaffold(body: Center(child: error));
+        ErrorWidget.builder = (FlutterErrorDetails errorDetails) => error;
+        return widget!;
+      },
     );
   }
 }

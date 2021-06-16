@@ -11,16 +11,30 @@ class GroupController extends GetxController {
 
   @override
   onInit() {
+    getGroups();
     super.onInit();
   }
 
   getGroups() async {
     final RequestProvider request = RequestProvider();
-    Uri uri = Uri.parse('${RequestProvider.baseUrl}/group');
-    final response = await request.get(uri);
-    final responseJson = jsonDecode(response.body);
-    print(responseJson);
-    // this.groups = responseJson.gGroup.fromJson();
+    Uri uri = Uri.parse('${RequestProvider.baseUrl}/groups');
+    try {
+      final response = await request.get(uri);
+      final responseJson = RequestProvider.returnResponse(response) as List;
+      print(responseJson);
+
+
+      final groupList =
+      responseJson.map((group) => Group.fromJson(group)).toList();
+
+      groups = groupList.obs;
+      if (groups != null) {
+        print(groups![0]);
+      }
+    }
+    catch (error) {
+      print(error);
+    }
   }
 
   select(Group group) {

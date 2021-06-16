@@ -31,8 +31,8 @@ class HomeAppBar extends StatelessWidget with PreferredSizeWidget {
                 IconButton(
                     onPressed: () => Scaffold.of(context).openDrawer(),
                     icon: Icon(Icons.menu)),
-                Obx(() => Text('controller.selectedGroup.value.title',
-                    style: TextStyle(color: MyColor.black))),
+                // Obx(() => Text('${controller.selectedGroup?.value.name}',
+                //     style: TextStyle(color: MyColor.black))),
                 IconButton(onPressed: () {}, icon: Icon(Icons.search))
               ],
             )),

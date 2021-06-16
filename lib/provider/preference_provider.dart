@@ -28,12 +28,16 @@ class PreferenceProvider {
   }
 
   saveToken(String? accessToken, String? refreshToken) async {
-    print({accessToken, refreshToken});
     if (accessToken == null || refreshToken == null) return;
 
     await _sharedPref!.setString(PreferenceKey.AccessToken, accessToken);
     await _sharedPref!.setString(PreferenceKey.RefreshToken, refreshToken);
     setTokens(accessToken, refreshToken);
+  }
+
+  deleteToken() async {
+    await _sharedPref!.remove(PreferenceKey.AccessToken);
+    await _sharedPref!.remove(PreferenceKey.RefreshToken);
   }
 
   loadToken() {
