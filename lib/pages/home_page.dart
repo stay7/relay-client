@@ -5,18 +5,23 @@ import 'package:get/route_manager.dart';
 import 'package:relay/config/color.dart';
 import 'package:relay/config/routes.dart';
 import 'package:relay/controller/group_controller.dart';
+import 'package:relay/controller/ui_controller.dart';
 import 'package:relay/controller/user_controller.dart';
 import 'package:relay/header/home_header.dart';
 import 'package:relay/pages/group_page.dart';
 
 class HomePage extends StatelessWidget {
+  final UiController uiController = Get.put(UiController());
   final UserController userController = Get.put(UserController());
   final GroupController groupController = Get.put(GroupController());
 
   @override
   Widget build(BuildContext context) {
     print('home build');
+    if (uiController.isLoading.value) return CircularProgressIndicator();
+
     return Scaffold(
+      key: uiController.scaffoldKey,
       appBar: HomeAppBar(),
       drawer: GroupPage(),
       floatingActionButton: FloatingActionButton(

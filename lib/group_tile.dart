@@ -4,27 +4,21 @@ import 'package:relay/config/color.dart';
 import 'package:relay/controller/group_controller.dart';
 import 'package:relay/types/group.dart';
 
-class GroupTile extends StatefulWidget {
-  Group groupData;
-  GroupTile(this.groupData);
+class GroupTile extends StatelessWidget {
+  final groupController = Get.find<GroupController>();
+  Group group;
+  // bool selected = controller.selectedGroup.value.id == widget.group;
 
-  @override
-  _GroupTileState createState() => _GroupTileState();
-}
-
-class _GroupTileState extends State<GroupTile> {
-  final controller = Get.find<GroupController>();
+  GroupTile(this.group);
 
   @override
   Widget build(BuildContext context) {
-    // bool selected = controller.selectedGroup.value.id == widget.groupData;
-
     return SizedBox(
       width: 340,
       height: 55,
       child: GestureDetector(
         onTap: () {
-          controller.select(widget.groupData);
+          groupController.select(group);
         },
         child: Container(
             margin: EdgeInsets.only(bottom: 8),
@@ -37,8 +31,8 @@ class _GroupTileState extends State<GroupTile> {
                   Icons.folder_open,
                   size: 24,
                 ),
-                Expanded(child: Text(widget.groupData.name)),
-                Text(widget.groupData.words.length.toString())
+                Expanded(child: Text(group.name)),
+                Text(group.words.length.toString())
               ],
             )),
       ),
