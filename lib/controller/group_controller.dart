@@ -7,18 +7,10 @@ import 'package:relay/types/group.dart';
 
 class GroupController extends GetxController {
   late Rx<Group> selectedGroup;
-  RxBool isLoading = false.obs;
   RxList<Group> groups = List<Group>.empty(growable: true).obs;
   final uiController = Get.find<UiController>();
 
-  @override
-  onInit() {
-    getGroups();
-    super.onInit();
-  }
-
   getGroups() async {
-    uiController.isLoading(true);
     final RequestProvider request = RequestProvider();
     Uri uri = Uri.parse('${RequestProvider.baseUrl}/groups');
     try {
@@ -28,10 +20,8 @@ class GroupController extends GetxController {
       groups(groupList);
       //TODO delete
       selectedGroup = groupList[0].obs;
-      uiController.isLoading(false);
     } catch (error) {
       print(error);
-      uiController.isLoading(false);
     }
   }
 

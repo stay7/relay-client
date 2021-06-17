@@ -6,6 +6,8 @@ import 'package:get/route_manager.dart';
 import 'package:http/http.dart' as http;
 import 'package:relay/config/config.dart';
 import 'package:relay/config/routes.dart';
+import 'package:relay/controller/group_controller.dart';
+import 'package:relay/controller/ui_controller.dart';
 import 'package:relay/provider/device_provider.dart';
 import 'package:relay/provider/preference_provider.dart';
 import 'package:relay/provider/request_provider.dart';
@@ -26,10 +28,15 @@ class LoginController extends GetxController {
     super.onInit();
   }
 
-  fireRoute(logged) {
+  fireRoute(logged) async {
     print('session $logged');
 
     if (logged) {
+      final groupController = Get.find<GroupController>();
+      final uiController = Get.find<UiController>();
+      await groupController.getGroups();
+      uiController.isLoaded(true);
+
       Get.offNamed(Routes.home);
     } else {
       Get.offAllNamed(Routes.login);

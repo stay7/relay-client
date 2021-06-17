@@ -21,8 +21,6 @@ class GroupList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      if (groupController.isLoading.value) return CircularProgressIndicator();
-
       return ListView.builder(
         padding: const EdgeInsets.only(left: 18, right: 18),
         itemCount: groupController.groups.length,

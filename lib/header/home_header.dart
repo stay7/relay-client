@@ -5,12 +5,11 @@ import 'package:relay/config/config.dart';
 import 'package:relay/controller/group_controller.dart';
 
 class HomeAppBar extends StatelessWidget with PreferredSizeWidget {
+  final groupController = Get.find<GroupController>();
   final Size _preferredSize;
 
   @override
   Size get preferredSize => this._preferredSize;
-
-  final controller = Get.find<GroupController>();
 
   HomeAppBar() : _preferredSize = Size.fromHeight(AppConfig.HeaderSize);
 
@@ -31,8 +30,10 @@ class HomeAppBar extends StatelessWidget with PreferredSizeWidget {
                 IconButton(
                     onPressed: () => Scaffold.of(context).openDrawer(),
                     icon: Icon(Icons.menu)),
-                Obx(() => Text('${controller.selectedGroup.value.name}',
-                    style: TextStyle(color: MyColor.black))),
+                Obx(() {
+                  return Text('${groupController.selectedGroup.value.name}',
+                      style: TextStyle(color: MyColor.black));
+                }),
                 IconButton(onPressed: () {}, icon: Icon(Icons.search))
               ],
             )),
