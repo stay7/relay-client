@@ -1,37 +1,18 @@
-/*
-  @PrimaryGeneratedColumn()
-  id: number;
+import 'package:relay/types/word.dart';
 
-  // @Column()
-  // userId: string;
-
-  @Column()
-  name: string;
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
-
-  @DeleteDateColumn()
-  deletedAt: Date;
-
-  @ManyToOne((_type) => User, (user) => user.groups, { eager: false })
-  @Exclude({ toPlainOnly: true })
-  user: User;
- */
 class Group {
-  final int id;
-  final String name;
-  final String createdAt;
-  final String updatedAt;
+  int id;
+  String name;
+  String createdAt;
+  String updatedAt;
+  List<Word> words = List<Word>.empty(growable: true);
 
-  Group(this.id, this.name, this.createdAt, this.updatedAt);
+  Group(this.id, this.name, this.words, this.createdAt, this.updatedAt);
 
   Group.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         name = json['name'],
+        words = json['words'].map<Word>((word) => Word.fromJson(word)).toList(),
         createdAt = json['createdAt'],
         updatedAt = json['updatedAt'];
 }

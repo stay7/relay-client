@@ -37,8 +37,8 @@ class _GroupTileState extends State<GroupTile> {
                   Icons.folder_open,
                   size: 24,
                 ),
-                // Expanded(child: Text(widget.groupData.title)),
-                // Text(widget.groupData.count.toString())
+                Expanded(child: Text(widget.groupData.name)),
+                Text(widget.groupData.words.length.toString())
               ],
             )),
       ),

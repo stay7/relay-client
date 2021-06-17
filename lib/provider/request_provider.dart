@@ -19,15 +19,19 @@ class RequestProvider extends http.BaseClient {
   RequestProvider.internal();
 
   @override
-  Future<StreamedResponse> send(BaseRequest request) {
-    final accessToken = PreferenceProvider().getAccessToken();
-    final refreshToken = PreferenceProvider().getRefreshToken();
+  Future<StreamedResponse> send(BaseRequest request) async {
+    var accessToken = PreferenceProvider().getAccessToken();
+    var refreshToken = PreferenceProvider().getRefreshToken();
     if (JwtDecoder.isExpired(accessToken)) {
-      if (!JwtDecoder.isExpired(refreshToken))
-        LoginController().renewAccessToken();
-      else
+      if (!JwtDecoder.isExpired(refreshToken)) {
+        await LoginController().renewAccessToken();
+        accessToken = PreferenceProvider().getAccessToken();
+        refreshToken = PreferenceProvider().getRefreshToken();
+      } else {
         LoginController().logout();
+      }
     }
+
     request.headers[HttpHeaders.authorizationHeader] = 'Bearer $accessToken';
     return this._client.send(request);
   }
@@ -37,7 +41,9 @@ class RequestProvider extends http.BaseClient {
       case 200:
       case 201:
         final responseJson = jsonDecode(response.body);
-        print('response ${response.statusCode}, $responseJson');
+        JsonEncoder encoder = JsonEncoder.withIndent('  ');
+        print(
+            'response ${response.statusCode}, ${encoder.convert(responseJson)}');
         return responseJson;
       case 300:
         throw ('300 에러');

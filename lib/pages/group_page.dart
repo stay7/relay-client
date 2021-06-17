@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 import 'package:relay/controller/group_controller.dart';
 import 'package:relay/group_tile.dart';
@@ -16,14 +17,18 @@ class GroupPage extends StatelessWidget {
 
 class GroupList extends StatelessWidget {
   final GroupController groupController = Get.find<GroupController>();
-  final groups = [];
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      padding: const EdgeInsets.only(left: 18, right: 18),
-      // itemCount: groupController.groups.length,
-      itemBuilder: (context, index) => GroupTile(groups[index].value),
-    );
+    return Obx(() {
+      if (groupController.isLoading.value) return CircularProgressIndicator();
+
+      return ListView.builder(
+        padding: const EdgeInsets.only(left: 18, right: 18),
+        itemCount: groupController.groups.length,
+        itemBuilder: (context, index) =>
+            GroupTile(groupController.groups[index]),
+      );
+    });
   }
 }
