@@ -6,7 +6,7 @@ import 'package:relay/types/group.dart';
 
 class GroupTile extends StatelessWidget {
   final groupController = Get.find<GroupController>();
-  Group group;
+  final Group group;
   // bool selected = controller.selectedGroup.value.id == widget.group;
 
   GroupTile(this.group);
@@ -17,16 +17,16 @@ class GroupTile extends StatelessWidget {
       width: 340,
       height: 55,
       child: GestureDetector(
-        onTap: () {
-          groupController.select(group);
-        },
+        onTap: () => groupController.select(group),
         child: Container(
           margin: EdgeInsets.only(bottom: 8),
           padding: EdgeInsets.only(left: 10, right: 10),
           decoration: BoxDecoration(
             color: MyColor.white,
             borderRadius: BorderRadius.circular(5),
-            border: Border.all(color: MyColor.black, width: 1),
+            border: groupController.selectedGroup.value.id == group.id
+                ? Border.all(color: MyColor.black, width: 1)
+                : null,
           ),
           child: Row(
             children: [
