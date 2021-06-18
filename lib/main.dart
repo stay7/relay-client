@@ -16,11 +16,6 @@ import 'package:relay/pages/splash_page.dart';
 import 'package:relay/provider/device_provider.dart';
 import 'package:relay/provider/preference_provider.dart';
 
-import 'controller/group_controller.dart';
-import 'controller/login_controller.dart';
-import 'controller/ui_controller.dart';
-import 'controller/user_controller.dart';
-
 void main() async {
   FlutterError.onError = (FlutterErrorDetails details) {
     FlutterError.dumpErrorToConsole(details);
@@ -33,12 +28,8 @@ void main() async {
   await PreferenceProvider().init();
   await Firebase.initializeApp();
 
-  final UiController uiController = Get.put(UiController());
-  final LoginController controller = Get.put(LoginController());
-  final GroupController groupController = Get.put(GroupController());
-  final UserController userController = Get.put(UserController());
-
   WidgetsFlutterBinding.ensureInitialized();
+  print('runApp');
   runApp(MyApp());
 }
 

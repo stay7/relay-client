@@ -6,10 +6,6 @@ import 'package:relay/types/user.dart';
 
 class UserController extends GetxController {
   Rx<User>? user;
-  static final UserController _userController = UserController.internal();
-
-  factory UserController() => _userController;
-  UserController.internal();
 
   getUser() async {
     RequestProvider request = RequestProvider();

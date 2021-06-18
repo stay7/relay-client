@@ -13,24 +13,17 @@ import 'package:relay/provider/preference_provider.dart';
 import 'package:relay/provider/request_provider.dart';
 
 class LoginController extends GetxController {
-  static final LoginController _loginController = LoginController._internal();
   final isLogged = false.obs;
-
-  factory LoginController() => _loginController;
-  LoginController._internal();
 
   @override
   onInit() {
-    PreferenceProvider().loadToken();
     ever(isLogged, fireRoute);
     Future.delayed(Duration(milliseconds: AppConfig.SplashDuration),
-        () => checkLoggedIn());
+        () => isLogged(PreferenceProvider().hasToken()));
     super.onInit();
   }
 
   fireRoute(logged) async {
-    print('session $logged');
-
     if (logged) {
       final groupController = Get.find<GroupController>();
       final uiController = Get.find<UiController>();
@@ -51,16 +44,14 @@ class LoginController extends GetxController {
         body: {'id': '$id', 'deviceId': DeviceProvider.deviceId});
 
     final responseJson = jsonDecode(response.body);
-    return responseJson;
+    await PreferenceProvider()
+        .saveToken(responseJson['accessToken'], responseJson['refreshToken']);
+    isLogged(PreferenceProvider().hasToken());
   }
 
   logout() async {
     await PreferenceProvider().deleteToken();
     isLogged.value = false;
-  }
-
-  checkLoggedIn() {
-    isLogged.value = PreferenceProvider().hasToken();
   }
 
   renewAccessToken() async {

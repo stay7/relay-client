@@ -4,11 +4,6 @@ import 'package:device_info/device_info.dart';
 import 'package:flutter/services.dart';
 
 class DeviceProvider {
-  static final DeviceProvider _deviceController = DeviceProvider._internal();
-
-  factory DeviceProvider() => _deviceController;
-  DeviceProvider._internal();
-
   static String deviceName = '';
   static String deviceVersion = '';
   static String deviceId = '';
