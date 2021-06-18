@@ -31,7 +31,7 @@ class RequestProvider extends http.BaseClient {
         LoginController().logout();
       }
     }
-
+    request.headers['Content-Type'] = 'application/json';
     request.headers[HttpHeaders.authorizationHeader] = 'Bearer $accessToken';
     return this._client.send(request);
   }

@@ -41,7 +41,7 @@ class LoginController extends GetxController {
 
     final response = await http.post(uri,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $code'},
-        body: {'id': '$id', 'deviceId': DeviceProvider.deviceId});
+        body: jsonEncode({'id': '$id', 'deviceId': DeviceProvider.deviceId}));
 
     final responseJson = jsonDecode(response.body);
     await PreferenceProvider()
@@ -57,7 +57,8 @@ class LoginController extends GetxController {
   renewAccessToken() async {
     final refreshToken = PreferenceProvider().getRefreshToken();
     Uri uri = Uri.parse('${RequestProvider.baseUrl}/auth/renew');
-    final response = await http.post(uri, body: {'refreshToken': refreshToken});
+    final response =
+        await http.post(uri, body: jsonEncode({'refreshToken': refreshToken}));
     final responseJson = RequestProvider.returnResponse(response);
     final accessToken = responseJson['accessToken'];
     await PreferenceProvider().saveToken(accessToken, refreshToken);

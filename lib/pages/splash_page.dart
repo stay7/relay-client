@@ -4,6 +4,7 @@ import 'package:relay/controller/group_controller.dart';
 import 'package:relay/controller/login_controller.dart';
 import 'package:relay/controller/ui_controller.dart';
 import 'package:relay/controller/user_controller.dart';
+import 'package:relay/controller/word_controller.dart';
 
 class SplashPage extends StatefulWidget {
   @override
@@ -29,6 +30,7 @@ class _SplashPageState extends State<SplashPage> {
     Get.put<GroupController>(GroupController(), permanent: true);
     Get.put<LoginController>(LoginController(), permanent: true);
     Get.put<UserController>(UserController(), permanent: true);
+    Get.put<WordController>(WordController(), permanent: true);
   }
 
   @override

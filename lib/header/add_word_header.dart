@@ -35,7 +35,7 @@ class AddWordHeader extends StatelessWidget with PreferredSizeWidget {
               Container(
                 alignment: Alignment.center,
                 child: Obx(
-                  () => Text('controller.selectedGroup.value.title',
+                  () => Text('${controller.selectedGroup.value.name}',
                       style: TextStyle(fontSize: 18, color: MyColor.black)),
                 ),
               ),
