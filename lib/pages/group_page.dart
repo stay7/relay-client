@@ -3,22 +3,34 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 import 'package:relay/config/color.dart';
+import 'package:relay/config/routes.dart';
 import 'package:relay/controller/group_controller.dart';
 import 'package:relay/controller/ui_controller.dart';
+import 'package:relay/dialogs/add_group_dialog.dart';
 import 'package:relay/group_tile.dart';
-import 'package:relay/header/group_header.dart';
+import 'package:relay/header/app_header.dart';
 import 'package:relay/types/group.dart';
 
 class GroupPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SizedBox.expand(
-        child: Drawer(
-            child: Column(children: [
-      GroupHeader(),
-      Expanded(child: GroupList()),
-      AddGroupButton()
-    ])));
+    return Scaffold(
+      appBar: AppHeader(
+        leftIcon: IconButton(
+            onPressed: () => Get.back(), icon: Icon(Icons.close, size: 24)),
+        rightIcon: IconButton(
+            onPressed: () => Get.toNamed(Routes.setting),
+            icon: Icon(Icons.settings, size: 24)),
+      ),
+      body: SizedBox.expand(
+        child: Column(
+          children: [
+            Expanded(child: GroupList()),
+            AddGroupButton(),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -44,46 +56,9 @@ class GroupList extends StatelessWidget {
   }
 }
 
-class AddGroupButton extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => _AddGroupButtonState();
-}
-
-class _AddGroupButtonState extends State<AddGroupButton> {
-  final _editTextController = TextEditingController();
-  final groupController = Get.find<GroupController>();
-  String _groupName = '';
-
-  @override
-  void dispose() {
-    _editTextController.dispose();
-    super.dispose();
-  }
-
-  onPressSave() async {
-    await groupController.addGroup(_groupName);
-    Get.back();
-    _editTextController.clear();
-  }
-
+class AddGroupButton extends StatelessWidget {
   onPressAddGroup(BuildContext context) {
-    Get.dialog(CupertinoAlertDialog(
-      title: Container(margin: EdgeInsets.only(bottom: 10), child: Text('입력')),
-      content: CupertinoTextField(
-        onChanged: (value) {
-          _groupName = value;
-        },
-        controller: _editTextController,
-      ),
-      actions: <Widget>[
-        TextButton(
-            child: Text('취소', style: TextStyle(fontSize: 16)),
-            onPressed: () => Get.back()),
-        TextButton(
-            child: Text('저장', style: TextStyle(fontSize: 16)),
-            onPressed: () => onPressSave()),
-      ],
-    ));
+    Get.dialog(AddGroupDialog());
   }
 
   @override
