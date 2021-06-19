@@ -13,9 +13,9 @@
 class User {
   final String id;
   final String timezone;
-  final String lastLoginAt;
-  final String createdAt;
-  final String updatedAt;
+  final DateTime lastLoginAt;
+  final DateTime createdAt;
+  final DateTime updatedAt;
 
   User(
       this.id, this.timezone, this.lastLoginAt, this.createdAt, this.updatedAt);
@@ -23,8 +23,7 @@ class User {
   User.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         timezone = json['timezone'],
-        lastLoginAt = json['lastLoginAt'],
-        createdAt = json['createdAt'],
-        updatedAt = json['updatedAt'];
-
+        lastLoginAt = DateTime.parse(json['lastLoginAt']),
+        createdAt = DateTime.parse(json['createdAt']),
+        updatedAt = DateTime.parse(json['updatedAt']);
 }

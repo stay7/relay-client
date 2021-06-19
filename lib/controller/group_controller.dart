@@ -20,9 +20,12 @@ class GroupController extends GetxController {
       final response = await request.get(uri);
       final json = RequestProvider.returnResponse(response) as List;
       final groupList = json.map((group) => Group.fromJson(group)).toList();
+
       if (groupList.length == 0) await addGroup('새 그룹');
+
+      groupList.sort((b, a) => a.createdAt.compareTo(b.createdAt));
       groups(groupList);
-      //TODO delete
+      //TODO set lastest selected group
       selectedGroup = groupList[0].obs;
     } catch (error) {
       print(error);
