@@ -4,8 +4,10 @@ import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 import 'package:relay/config/color.dart';
 import 'package:relay/controller/group_controller.dart';
+import 'package:relay/controller/ui_controller.dart';
 import 'package:relay/group_tile.dart';
 import 'package:relay/header/group_header.dart';
+import 'package:relay/types/group.dart';
 
 class GroupPage extends StatelessWidget {
   @override
@@ -22,6 +24,12 @@ class GroupPage extends StatelessWidget {
 
 class GroupList extends StatelessWidget {
   final GroupController groupController = Get.find<GroupController>();
+  final UiController uiController = Get.find<UiController>();
+
+  onPressGroup(Group group) {
+    groupController.select(group);
+    uiController.closeDrawer();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +38,7 @@ class GroupList extends StatelessWidget {
         padding: const EdgeInsets.only(left: 18, right: 18),
         itemCount: groupController.groups.length,
         itemBuilder: (context, index) =>
-            GroupTile(groupController.groups[index]),
+            GroupTile(groupController.groups[index], onPressGroup),
       ),
     );
   }

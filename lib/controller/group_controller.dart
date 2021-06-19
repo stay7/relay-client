@@ -8,11 +8,24 @@ import 'package:relay/provider/request_provider.dart';
 import 'package:relay/types/group.dart';
 
 class GroupController extends GetxController {
-  late Rx<Group> selectedGroup;
-  RxList<Group> groups = List<Group>.empty(growable: true).obs;
   final uiController = Get.find<UiController>();
-
   final RequestProvider request = RequestProvider();
+
+  RxInt selectedGroupIndex = 0.obs;
+  RxList<Group> groups = List<Group>.empty(growable: true).obs;
+
+  select(Group group) {
+    final index = groups.indexOf(group);
+    selectedGroupIndex(index);
+  }
+
+  get selectedGroup => groups[selectedGroupIndex.value];
+  get unselectedGroups {
+    print('called');
+    return groups
+        .where((group) => group.id != groups[selectedGroupIndex.value].id)
+        .toList();
+  }
 
   getGroups() async {
     Uri uri = Uri.parse('${RequestProvider.baseUrl}/groups');
@@ -25,8 +38,8 @@ class GroupController extends GetxController {
 
       groupList.sort((b, a) => a.createdAt.compareTo(b.createdAt));
       groups(groupList);
-      //TODO set lastest selected group
-      selectedGroup = groupList[0].obs;
+      //TODO set latest selected group
+      // selectedgroupIndex(0);
     } catch (error) {
       print(error);
     }
@@ -39,10 +52,5 @@ class GroupController extends GetxController {
     final group = Group.fromJson(responseJson);
     groups.add(group);
     return group;
-  }
-
-  select(Group group) {
-    selectedGroup(group);
-    uiController.closeDrawer();
   }
 }

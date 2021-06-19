@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:relay/config/color.dart';
 import 'package:relay/controller/group_controller.dart';
+import 'package:relay/controller/ui_controller.dart';
 import 'package:relay/types/group.dart';
 
 class GroupTile extends StatelessWidget {
   final groupController = Get.find<GroupController>();
-  final Group group;
-  // bool selected = controller.selectedGroup.value.id == widget.group;
+  final uiController = Get.find<UiController>();
+  late final Group group;
+  final Function(Group)? onPress;
 
-  GroupTile(this.group);
+  GroupTile(this.group, this.onPress);
 
   @override
   Widget build(BuildContext context) {
@@ -17,14 +19,16 @@ class GroupTile extends StatelessWidget {
       width: 340,
       height: 55,
       child: GestureDetector(
-        onTap: () => groupController.select(group),
+        onTap: () {
+          if (onPress != null) onPress!(group);
+        },
         child: Container(
           margin: EdgeInsets.only(bottom: 8),
           padding: EdgeInsets.only(left: 10, right: 10),
           decoration: BoxDecoration(
             color: MyColor.white,
             borderRadius: BorderRadius.circular(5),
-            border: groupController.selectedGroup.value.id == group.id
+            border: groupController.selectedGroup == group
                 ? Border.all(color: MyColor.black, width: 1)
                 : null,
           ),

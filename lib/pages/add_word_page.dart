@@ -39,7 +39,7 @@ class _AddWordPage extends State<AddWordPage> {
     //TODO: check validation
     print('onPressSave');
 
-    final Group group = _groupController.selectedGroup.value;
+    final Group group = _groupController.selectedGroup;
     final Word word = await _wordController.addWord(
         group, _textName, _textMeaning, _textMeaning);
     group.words.add(word);
@@ -60,7 +60,7 @@ class _AddWordPage extends State<AddWordPage> {
       backgroundColor: MyColor.lightGrey,
       body: SizedBox.expand(
         child: Container(
-          padding: EdgeInsets.only(left: 20, right: 20, top: 20),
+          padding: EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -129,9 +129,8 @@ class _AddWordPage extends State<AddWordPage> {
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).viewInsets.bottom == 0
-                              ? 50
-                              : 20),
+                          bottom:
+                              Get.mediaQuery.viewInsets.bottom == 0 ? 30 : 0),
                       child: ConstrainedBox(
                         constraints: BoxConstraints.tightFor(height: 50),
                         child: ElevatedButton(

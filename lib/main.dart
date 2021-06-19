@@ -11,6 +11,7 @@ import 'package:relay/config/routes.dart';
 import 'package:relay/pages/add_word_page.dart';
 import 'package:relay/pages/home_page.dart';
 import 'package:relay/pages/login_page.dart';
+import 'package:relay/pages/select_group_page.dart';
 import 'package:relay/pages/setting_page.dart';
 import 'package:relay/pages/splash_page.dart';
 import 'package:relay/provider/device_provider.dart';
@@ -59,7 +60,11 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: Routes.setting,
             page: () => SettingPage(),
-            transition: Transition.downToUp)
+            transition: Transition.downToUp),
+        GetPage(
+            name: Routes.selectGroup,
+            page: () => SelectGroupPage(),
+            transition: Transition.downToUp),
       ],
       builder: (BuildContext context, Widget? widget) {
         Widget error = Text('...rendering error...');
