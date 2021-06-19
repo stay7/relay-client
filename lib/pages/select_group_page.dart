@@ -45,7 +45,10 @@ class SelectGroupBody extends StatelessWidget {
               child: Text('그룹을 선택해주세요', style: TextStyle(fontSize: 18)),
             ),
             Obx(
-              () => GroupTile(groupController.selectedGroup, onPressGroup),
+              () => Container(
+                margin: EdgeInsets.only(bottom: 28),
+                child: GroupTile(groupController.selectedGroup, onPressGroup),
+              ),
             ),
             Obx(
               () => ListView.builder(
