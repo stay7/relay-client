@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:relay/config/color.dart';
 import 'package:relay/controller/group_controller.dart';
-import 'package:relay/group_tile.dart';
+import 'package:relay/components/group_tile.dart';
 import 'package:relay/header/app_header.dart';
 import 'package:relay/types/group.dart';
 

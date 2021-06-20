@@ -8,11 +8,22 @@ class AppHeader extends StatelessWidget with PreferredSizeWidget {
   final String? title;
   final IconButton? leftIcon;
   final IconButton? rightIcon;
+  final bool bottomBorder;
 
   @override
   Size get preferredSize => this._preferredSize;
 
-  AppHeader({this.title, this.leftIcon, this.rightIcon});
+  AppHeader(
+      {this.title, this.leftIcon, this.rightIcon, this.bottomBorder = false});
+
+  final BoxDecoration topDecoration = BoxDecoration(
+      border: Border(top: BorderSide(color: MyColor.black, width: 1)));
+  final BoxDecoration topBottomDecoration = BoxDecoration(
+    border: Border(
+      top: BorderSide(color: MyColor.black, width: 1),
+      bottom: BorderSide(color: MyColor.black, width: 1),
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -21,17 +32,14 @@ class AppHeader extends StatelessWidget with PreferredSizeWidget {
       preferredSize: preferredSize,
       child: Container(
         margin: EdgeInsets.only(top: statusBarHeight),
-        decoration: const BoxDecoration(
-          border: Border(top: BorderSide(color: MyColor.black, width: 1)),
-        ),
+        decoration: bottomBorder ? topBottomDecoration : topDecoration,
         child: Stack(fit: StackFit.expand, children: [
           if (title != null)
             Align(
-                alignment: Alignment.center,
-                child: Text(
-                  title!,
-                  style: TextStyle(fontSize: 16, color: MyColor.black),
-                )),
+              alignment: Alignment.center,
+              child: Text(title!,
+                  style: TextStyle(fontSize: 16, color: MyColor.black)),
+            ),
           if (leftIcon != null) Positioned(left: 0, child: leftIcon!),
           if (rightIcon != null) Positioned(right: 0, child: rightIcon!)
         ]),
