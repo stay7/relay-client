@@ -74,6 +74,7 @@ class _AddWordPage extends State<AddWordPage> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 24),
                 child: TextField(
+                  autocorrect: false,
                   controller: _editWordController,
                   onChanged: (String value) {
                     setState(() => _textName = value);
@@ -91,6 +92,7 @@ class _AddWordPage extends State<AddWordPage> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 24),
                 child: TextField(
+                  autocorrect: false,
                   controller: _editMeaningController,
                   onChanged: (String value) {
                     setState(() => _textMeaning = value);
@@ -108,6 +110,7 @@ class _AddWordPage extends State<AddWordPage> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 24),
                 child: TextField(
+                  autocorrect: false,
                   controller: _editUsageController,
                   onChanged: (String value) {
                     setState(() => _textUsage = value);

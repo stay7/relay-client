@@ -28,11 +28,16 @@
   deletedAt: Date;
  */
 
+class DoneStatus {
+  static final String OPEN = "OPEN";
+  static final String DONE = "DONE";
+}
+
 class Word {
   int id;
   String name;
-  String? meaning = '';
-  String? usage = '';
+  String meaning = '';
+  String usage = '';
   String doneStatus;
 
   Word.fromJson(Map<String, dynamic> json)

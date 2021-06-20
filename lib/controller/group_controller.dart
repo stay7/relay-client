@@ -1,25 +1,36 @@
+import 'dart:collection';
 import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/state_manager.dart';
 import 'package:relay/controller/ui_controller.dart';
+import 'package:relay/controller/word_controller.dart';
 import 'package:relay/provider/request_provider.dart';
 import 'package:relay/types/group.dart';
 
 class GroupController extends GetxController {
   final uiController = Get.find<UiController>();
+  final wordController = Get.find<WordController>();
   final RequestProvider request = RequestProvider();
 
   RxInt selectedGroupIndex = 0.obs;
   RxList<Group> groups = List<Group>.empty(growable: true).obs;
+
+  @override
+  onInit() {
+    ever(selectedGroupIndex, (int index) {
+      wordController.classifyWord(groups[index].words);
+    });
+    super.onInit();
+  }
 
   select(Group group) {
     final index = groups.indexOf(group);
     selectedGroupIndex(index);
   }
 
-  get selectedGroup => groups[selectedGroupIndex.value];
+  Group get selectedGroup => groups[selectedGroupIndex.value];
   get unselectedGroups {
     print('called');
     return groups
@@ -39,7 +50,7 @@ class GroupController extends GetxController {
       groupList.sort((b, a) => a.createdAt.compareTo(b.createdAt));
       groups(groupList);
       //TODO set latest selected group
-      // selectedgroupIndex(0);
+      selectedGroupIndex(0);
     } catch (error) {
       print(error);
     }

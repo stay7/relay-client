@@ -21,16 +21,17 @@ class _SplashPageState extends State<SplashPage> {
   /*
     Controller 생성 순서 중요
     1. UI
-    2. Group
-    3. Login
+    2. Word
+    3. Group
+    4. Login
     ...
    */
   loadDependencies() {
     Get.put<UiController>(UiController(), permanent: true);
+    Get.put<WordController>(WordController(), permanent: true);
     Get.put<GroupController>(GroupController(), permanent: true);
     Get.put<LoginController>(LoginController(), permanent: true);
     Get.put<UserController>(UserController(), permanent: true);
-    Get.put<WordController>(WordController(), permanent: true);
   }
 
   @override
