@@ -1,4 +1,3 @@
-import 'dart:collection';
 import 'dart:convert';
 
 import 'package:get/get.dart';
@@ -31,12 +30,10 @@ class GroupController extends GetxController {
   }
 
   Group get selectedGroup => groups[selectedGroupIndex.value];
-  get unselectedGroups {
-    print('called');
-    return groups
-        .where((group) => group.id != groups[selectedGroupIndex.value].id)
-        .toList();
-  }
+
+  List<Group> get unselectedGroups => groups
+      .where((group) => group.id != groups[selectedGroupIndex.value].id)
+      .toList();
 
   getGroups() async {
     Uri uri = Uri.parse('${RequestProvider.baseUrl}/groups');

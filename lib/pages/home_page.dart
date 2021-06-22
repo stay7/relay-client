@@ -42,10 +42,14 @@ class WordList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => ListView.builder(
+      () => ReorderableListView.builder(
         itemCount: wordController.activeWords.length,
         itemBuilder: (_, index) =>
             WordActiveTile(wordController.activeWords[index]),
+        onReorder: (int oldIndex, int newIndex) {
+          final word = wordController.activeWords.removeAt(oldIndex);
+          wordController.activeWords.insert(newIndex, word);
+        },
       ),
     );
   }
