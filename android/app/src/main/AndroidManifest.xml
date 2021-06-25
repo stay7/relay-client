@@ -1,10 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.stay7.relay">
+    package="com.stay7.oneway">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:label="relay"
+        android:label="OneWay"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
@@ -39,7 +39,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="relay" />
+                <data android:scheme="oneway" />
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
@@ -54,7 +54,7 @@
             <action android:name="android.intent.action.VIEW" />
             <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />
-            <data android:scheme="http" android:host="com.stay7.relay" />
+            <data android:scheme="http" android:host="com.stay7.oneway" />
             <data android:scheme="https" />
         </intent-filter>
     </application>

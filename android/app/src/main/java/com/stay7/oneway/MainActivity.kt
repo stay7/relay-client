@@ -1,4 +1,4 @@
-package com.stay7.relay
+package com.stay7.oneway
 
 import io.flutter.embedding.android.FlutterActivity
 
