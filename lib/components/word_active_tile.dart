@@ -7,7 +7,7 @@ import 'package:relay/types/word.dart';
 class WordActiveTile extends StatelessWidget {
   final Word word;
 
-  WordActiveTile(this.word);
+  WordActiveTile({Key? key, required this.word}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

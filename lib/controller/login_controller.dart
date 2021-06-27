@@ -26,9 +26,10 @@ class LoginController extends GetxController {
     if (logged) {
       final groupController = Get.find<GroupController>();
       await groupController.getGroups();
-
+      Get.snackbar('로그인 되었습니다.', '로그인 성공');
       Get.offNamed(Routes.home);
     } else {
+      Get.snackbar('로그인 실패.', '뭐야?');
       Get.offAllNamed(Routes.login);
     }
   }
