@@ -8,5 +8,7 @@ class MyColor {
   static const Color greyC4 = Color(0xFFC4C4C4);
   static const Color white = Color(0xFFFFFFFF);
   static const Color blue = Color(0xFF509EFF);
+  static const Color red = Color(0xFFEF5350);
+  static const Color green = Color(0xFF3CB043);
   static const Color transparent = Colors.transparent;
 }

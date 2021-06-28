@@ -19,6 +19,12 @@ class WordController extends GetxController {
     inActiveWords(inActives);
   }
 
+  dismissWord(Word word) {
+    word.doneStatus = DoneStatus.DONE;
+    this.inActiveWords.add(word);
+    this.activeWords.remove(word);
+  }
+
   Future<Word> addWord(
       Group group, String name, String? meaning, String? usage) async {
     final request = RequestProvider();
@@ -33,4 +39,6 @@ class WordController extends GetxController {
     final responseJson = RequestProvider.returnResponse(response);
     return Word.fromJson(responseJson);
   }
+
+  // Future<Word> deleteWord(Word word) async {}
 }

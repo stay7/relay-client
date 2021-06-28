@@ -27,6 +27,7 @@ class GroupController extends GetxController {
   select(Group group) {
     final index = groups.indexOf(group);
     selectedGroupIndex(index);
+    print('selectedGroupIndex,$selectedGroupIndex');
   }
 
   Group get selectedGroup => groups[selectedGroupIndex.value];
