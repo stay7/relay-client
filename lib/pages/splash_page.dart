@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/instance_manager.dart';
+import 'package:relay/controller/config_controller.dart';
 import 'package:relay/controller/group_controller.dart';
 import 'package:relay/controller/login_controller.dart';
 import 'package:relay/controller/ui_controller.dart';
@@ -32,6 +33,7 @@ class _SplashPageState extends State<SplashPage> {
     Get.put<GroupController>(GroupController(), permanent: true);
     Get.put<LoginController>(LoginController(), permanent: true);
     Get.put<UserController>(UserController(), permanent: true);
+    Get.put<ConfigController>(ConfigController(), permanent: true);
   }
 
   @override
