@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:relay/config/color.dart';
+import 'package:relay/controller/config_controller.dart';
 import 'package:relay/controller/group_controller.dart';
 import 'package:relay/controller/word_controller.dart';
 import 'package:relay/header/add_word_header.dart';
@@ -21,6 +22,7 @@ class _AddWordPage extends State<AddWordPage> {
   final _editUsageController = TextEditingController();
   final GroupController _groupController = Get.find<GroupController>();
   final WordController _wordController = Get.find<WordController>();
+  final ConfigController _configController = Get.find<ConfigController>();
 
   @override
   void dispose() {
@@ -41,9 +43,11 @@ class _AddWordPage extends State<AddWordPage> {
 
     final Group group = _groupController.selectedGroup;
     final Word word = await _wordController.addWord(
-        group, _textName, _textMeaning, _textMeaning);
+        group, _textName, _textMeaning, _textUsage);
     group.words.add(word);
     clearEdit();
+
+    if (!_configController.isKeepAddWord.value) Get.back();
     Get.snackbar('저장되었습니다.', '저장 성공');
   }
 

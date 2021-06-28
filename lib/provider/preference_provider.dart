@@ -1,3 +1,4 @@
+import 'package:relay/config/config.dart';
 import 'package:relay/config/preference_key.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,6 +17,7 @@ class PreferenceProvider {
     loadToken();
   }
 
+  /// Token
   getAccessToken() => _accessToken;
   getRefreshToken() => _refreshToken;
 
@@ -50,4 +52,14 @@ class PreferenceProvider {
     setTokens(accessToken, refreshToken);
     return [accessToken, refreshToken];
   }
+
+  /// 단어 계속 추가 (isKeepAdd)
+  bool loadKeepAddWord() {
+    bool? isKeepAddWord = _sharedPref.getBool(PreferenceKey.KeepAddWord);
+    if (isKeepAddWord != null) return isKeepAddWord;
+    return AppConfig.defaultKeepAddWord;
+  }
+
+  saveKeepAddWord(bool isKeepAddWord) async =>
+      await _sharedPref.setBool(PreferenceKey.KeepAddWord, isKeepAddWord);
 }
