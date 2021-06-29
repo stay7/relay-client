@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:relay/config/color.dart';
+import 'package:relay/config/routes.dart';
 import 'package:relay/controller/word_controller.dart';
 import 'package:relay/types/word.dart';
 
@@ -30,10 +31,17 @@ class WordActiveTile extends StatelessWidget {
           icon: Icons.delete_outlined,
           foregroundColor: MyColor.red,
           onTap: () {
-            //TODO : delete
-            print('TODO delete');
+            _wordController.deleteWord(word);
           },
-        )
+        ),
+        IconSlideAction(
+          caption: 'Edit',
+          icon: Icons.edit_outlined,
+          foregroundColor: MyColor.black,
+          onTap: () {
+            Get.toNamed(Routes.editWord, arguments: word);
+          },
+        ),
       ],
       secondaryActions: <Widget>[
         IconSlideAction(

@@ -6,8 +6,8 @@ import 'package:get/get.dart';
 class AppHeader extends StatelessWidget with PreferredSizeWidget {
   final Size _preferredSize = Size.fromHeight(AppConfig.HeaderSize);
   final String? title;
-  final IconButton? leftIcon;
-  final IconButton? rightIcon;
+  final Widget? leftIcon;
+  final Widget? rightIcon;
   final bool bottomBorder;
 
   @override
