@@ -5,6 +5,7 @@ import 'package:relay/components/setting-menu.dart';
 import 'package:relay/config/color.dart';
 import 'package:relay/controller/config_controller.dart';
 import 'package:relay/header/app_header.dart';
+import 'package:relay/provider/info_provider.dart';
 
 class SettingPage extends StatelessWidget {
   final configController = Get.find<ConfigController>();
@@ -34,7 +35,10 @@ class SettingPage extends StatelessWidget {
                   configController.switchKeepAddWord();
                 },
               ),
-              SettingMenuItem(onPress: () {}, title: '버전 정보', content: '1.2.3'),
+              SettingMenuItem(
+                  onPress: () {},
+                  title: '버전 정보',
+                  content: '${InfoProvider.appVersion}'),
               SettingMenu(icon: Icon(Icons.settings_outlined), title: '시스템'),
               SettingMenuItem(onPress: () {}, title: '버전 정보', content: '1.2.3'),
               SettingMenuItem(onPress: () {}, title: '버전 정보', content: '1.2.3'),

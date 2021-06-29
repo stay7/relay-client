@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:relay/config/config.dart';
 import 'package:relay/config/routes.dart';
 import 'package:relay/controller/group_controller.dart';
-import 'package:relay/provider/device_provider.dart';
+import 'package:relay/provider/info_provider.dart';
 import 'package:relay/provider/preference_provider.dart';
 import 'package:relay/provider/request_provider.dart';
 
@@ -43,7 +43,7 @@ class LoginController extends GetxController {
         HttpHeaders.contentTypeHeader: 'application/json',
         HttpHeaders.authorizationHeader: 'Bearer $code'
       },
-      body: jsonEncode({'id': '$id', 'deviceId': DeviceProvider.deviceId}),
+      body: jsonEncode({'id': '$id', 'deviceId': InfoProvider.deviceId}),
     );
 
     final responseJson = jsonDecode(response.body);
