@@ -1,4 +1,3 @@
-import 'dart:collection';
 import 'dart:convert';
 
 import 'package:get/get.dart';
@@ -7,6 +6,7 @@ import 'package:relay/types/group.dart';
 import 'package:relay/types/word.dart';
 
 class WordController extends GetxController {
+  final request = RequestProvider();
   RxList<Word> activeWords = List<Word>.empty(growable: true).obs;
   RxList<Word> inActiveWords = List<Word>.empty(growable: true).obs;
 
@@ -27,7 +27,6 @@ class WordController extends GetxController {
 
   Future<Word> addWord(
       Group group, String name, String? meaning, String? usage) async {
-    final request = RequestProvider();
     Uri url = Uri.parse('${RequestProvider.baseUrl}/words');
     final response = await request.post(url,
         body: jsonEncode({
@@ -40,5 +39,13 @@ class WordController extends GetxController {
     return Word.fromJson(responseJson);
   }
 
-  // Future<Word> deleteWord(Word word) async {}
+  deleteWord(Word word) async {
+    Uri url = Uri.parse('${RequestProvider.baseUrl}/words/${word.id}');
+    final response = await request.delete(url);
+    final responseJson = RequestProvider.returnResponse(response);
+
+    //TODO check delete success
+    activeWords.remove(word);
+    inActiveWords.remove(word);
+  }
 }
