@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:relay/components/back_icon.dart';
 import 'package:relay/config/color.dart';
 import 'package:relay/config/config.dart';
 import 'package:relay/config/routes.dart';
@@ -28,14 +29,7 @@ class AddWordHeader extends StatelessWidget with PreferredSizeWidget {
             children: [
               Positioned(
                 left: 0,
-                child: IconButton(
-                  onPressed: () => Get.back(),
-                  icon: Icon(
-                    Icons.arrow_back_ios_outlined,
-                    color: MyColor.black,
-                    size: 24,
-                  ),
-                ),
+                child: BackIconButton(),
               ),
               GroupTitle(),
             ],
@@ -49,8 +43,6 @@ class GroupTitle extends StatelessWidget {
   final GroupController controller = Get.find<GroupController>();
 
   handleTap() {
-    //TODO open group selection page
-    print('handleTap');
     Get.toNamed(Routes.selectGroup);
   }
 
