@@ -16,14 +16,16 @@ class LoginController extends GetxController {
 
   @override
   onInit() {
-    ever(isLogged, fireRoute);
+    ever(isLogged, (isLogged) {
+      fireRoute(isLogged);
+    });
     Future.delayed(Duration(milliseconds: AppConfig.SplashDuration),
         () => isLogged(PreferenceProvider().hasToken()));
     super.onInit();
   }
 
-  fireRoute(logged) async {
-    if (logged) {
+  fireRoute(isLogged) async {
+    if (isLogged) {
       final groupController = Get.find<GroupController>();
       await groupController.getGroups();
       Get.snackbar('로그인 되었습니다.', '로그인 성공');
