@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
+import 'package:get/route_manager.dart';
+import 'package:relay/components/page_title.dart';
 import 'package:relay/config/color.dart';
 import 'package:relay/controller/config_controller.dart';
 import 'package:relay/controller/group_controller.dart';
@@ -7,7 +9,6 @@ import 'package:relay/controller/word_controller.dart';
 import 'package:relay/header/add_word_header.dart';
 import 'package:relay/types/group.dart';
 import 'package:relay/types/word.dart';
-import 'package:get/route_manager.dart';
 
 class AddWordPage extends StatefulWidget {
   _AddWordPage createState() => _AddWordPage();
@@ -68,13 +69,7 @@ class _AddWordPage extends State<AddWordPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                margin: EdgeInsets.only(bottom: 50),
-                child: Text(
-                  '추가할 단어를 입력하세요',
-                  style: TextStyle(color: MyColor.black, fontSize: 18),
-                ),
-              ),
+              PageTitle(title: '추가할 단어를 입력하세요'),
               Padding(
                 padding: const EdgeInsets.only(bottom: 24),
                 child: TextField(
