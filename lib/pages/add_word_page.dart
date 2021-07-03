@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:get/route_manager.dart';
+import 'package:relay/components/main_button.dart';
 import 'package:relay/components/page_title.dart';
 import 'package:relay/config/color.dart';
 import 'package:relay/controller/config_controller.dart';
@@ -133,23 +134,7 @@ class _AddWordPage extends State<AddWordPage> {
                       padding: EdgeInsets.only(
                           bottom:
                               Get.mediaQuery.viewInsets.bottom == 0 ? 30 : 0),
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints.tightFor(height: 50),
-                        child: ElevatedButton(
-                          onPressed: () => onPressSave(),
-                          child: Text(
-                            "저장",
-                            style: TextStyle(fontSize: 18),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            primary: MyColor.black,
-                            onPrimary: MyColor.white,
-                            shape: new RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
-                        ),
-                      ),
+                      child: MainButton(text: '저장', onPressed: onPressSave),
                     ),
                   ],
                 ),
