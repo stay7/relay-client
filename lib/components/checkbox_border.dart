@@ -7,28 +7,14 @@ class CheckBoxBorder extends StatefulWidget {
   final bool checked;
   final Function(bool?)? onChanged;
 
-  CheckBoxBorder({required this.text, this.checked = false, this.onChanged});
+  CheckBoxBorder(
+      {required this.text, this.checked = false, required this.onChanged});
 
   @override
   State<StatefulWidget> createState() => _CheckBoxBorderState();
 }
 
 class _CheckBoxBorderState extends State<CheckBoxBorder> {
-  late bool isChecked;
-
-  @override
-  void initState() {
-    isChecked = widget.checked;
-    super.initState();
-  }
-
-  handleOnChange(bool? flag) {
-    widget.onChanged != null && widget.onChanged!(flag);
-    setState(() {
-      isChecked = flag!;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -42,7 +28,7 @@ class _CheckBoxBorderState extends State<CheckBoxBorder> {
         child: GestureDetector(
           behavior: HitTestBehavior.translucent,
           onTap: () {
-            handleOnChange(!isChecked);
+            widget.onChanged!(!widget.checked);
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -52,8 +38,10 @@ class _CheckBoxBorderState extends State<CheckBoxBorder> {
                 style: TextStyle(fontSize: 16, color: MyColor.black),
               ),
               Checkbox(
-                value: isChecked,
-                onChanged: handleOnChange,
+                value: widget.checked,
+                onChanged: (flag) {
+                  widget.onChanged!(flag);
+                },
                 checkColor: MyColor.white,
                 activeColor: MyColor.black,
               )

@@ -10,6 +10,7 @@ import 'package:relay/config/color.dart';
 import 'package:relay/config/config.dart';
 import 'package:relay/config/routes.dart';
 import 'package:relay/controller/group_controller.dart';
+import 'package:relay/controller/word_controller.dart';
 import 'package:relay/header/app_header.dart';
 import 'package:relay/types/group.dart';
 import 'package:relay/types/word.dart';
@@ -20,10 +21,12 @@ class EditWordPage extends StatefulWidget {
 
 class _EditWordPage extends State<EditWordPage> {
   final GroupController _groupController = Get.find<GroupController>();
+  final WordController _wordController = Get.find<WordController>();
   late final TextEditingController _nameController;
   late final TextEditingController _meaningController;
   late final TextEditingController _usageController;
   late Group group;
+  late bool isChecked;
 
   Word word = Get.arguments;
 
@@ -32,12 +35,21 @@ class _EditWordPage extends State<EditWordPage> {
     _nameController = new TextEditingController(text: word.name);
     _meaningController = new TextEditingController(text: word.meaning);
     _usageController = new TextEditingController(text: word.usage);
+    isChecked = word.doneStatus == DoneStatus.DONE;
     group = _groupController.selectedGroup;
 
     super.initState();
   }
 
-  onPressEdit() {}
+  onPressEdit() async {
+    word.name = _nameController.text;
+    word.meaning = _meaningController.text;
+    word.usage = _usageController.text;
+    word.doneStatus = isChecked ? DoneStatus.DONE : DoneStatus.OPEN;
+    word = await _wordController.updateWord(word);
+
+    Get.back();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,21 +64,18 @@ class _EditWordPage extends State<EditWordPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PageTitle(title: '단어를 수정하세요'),
-            TextFieldBorder(
-              controller: _nameController,
-              hintText: '단어 이름',
-            ),
-            TextFieldBorder(
-              controller: _meaningController,
-              hintText: '의미',
-            ),
-            TextFieldBorder(
-              controller: _usageController,
-              hintText: '예시',
-            ),
+            TextFieldBorder(controller: _nameController, hintText: '단어 이름'),
+            TextFieldBorder(controller: _meaningController, hintText: '의미'),
+            TextFieldBorder(controller: _usageController, hintText: '예시'),
             CheckBoxBorder(
               text: '완료',
-              checked: word.doneStatus == DoneStatus.DONE,
+              checked: isChecked,
+              onChanged: (flag) {
+                if (flag != null)
+                  setState(() {
+                    isChecked = flag;
+                  });
+              },
             ),
             Container(
               margin: EdgeInsets.symmetric(vertical: 5),
@@ -94,10 +103,10 @@ class _EditWordPage extends State<EditWordPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  MainButton(text: '수정', onPressed: () {}),
+                  MainButton(text: '수정', onPressed: onPressEdit),
                   SizedBox(
                     height: Get.mediaQuery.viewInsets.bottom == 0 ? 30 : 0,
-                  )
+                  ),
                 ],
               ),
             )

@@ -1,17 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:relay/components/group_tile.dart';
 import 'package:relay/config/color.dart';
 import 'package:relay/controller/group_controller.dart';
-import 'package:relay/components/group_tile.dart';
 import 'package:relay/header/app_header.dart';
 import 'package:relay/types/group.dart';
 
 class SelectGroupPage extends StatelessWidget {
-  final GroupController groupController = Get.find<GroupController>();
+  final GroupController _groupController = Get.find<GroupController>();
 
   onPressGroup(Group group) {
-    groupController.select(group);
+    _groupController.select(group);
     Get.back();
   }
 
@@ -39,14 +39,15 @@ class SelectGroupPage extends StatelessWidget {
               Obx(
                 () => Container(
                   margin: EdgeInsets.only(bottom: 28),
-                  child: GroupTile(groupController.selectedGroup, onPressGroup),
+                  child:
+                      GroupTile(_groupController.selectedGroup, onPressGroup),
                 ),
               ),
               Obx(
                 () => ListView.builder(
-                  itemCount: groupController.groups.length - 1,
+                  itemCount: _groupController.groups.length - 1,
                   itemBuilder: (_, index) => GroupTile(
-                      groupController.unselectedGroups[index], onPressGroup),
+                      _groupController.unselectedGroups[index], onPressGroup),
                   shrinkWrap: true,
                   scrollDirection: Axis.vertical,
                 ),

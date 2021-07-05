@@ -39,6 +39,13 @@ class WordController extends GetxController {
     return Word.fromJson(responseJson);
   }
 
+  Future<Word> updateWord(Word word) async {
+    Uri url = Uri.parse('${RequestProvider.baseUrl}/words/${word.id}');
+    final response = await request.patch(url, body: jsonEncode(word.toJson()));
+    final responseJson = RequestProvider.returnResponse(response);
+    return Word.fromJson(responseJson);
+  }
+
   deleteWord(Word word) async {
     Uri url = Uri.parse('${RequestProvider.baseUrl}/words/${word.id}');
     final response = await request.delete(url);

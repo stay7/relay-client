@@ -16,4 +16,12 @@ class Word {
         meaning = json['meaning'],
         usage = json['usage'],
         doneStatus = json['doneStatus'];
+
+  Map<String, dynamic> toJson() => {
+        'id': id.toString(),
+        'name': name,
+        'meaning': meaning,
+        'usage': usage,
+        'doneStatus': doneStatus,
+      };
 }
