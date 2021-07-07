@@ -15,6 +15,7 @@ class WordController extends GetxController {
         groupWords.where((word) => word.doneStatus == DoneStatus.OPEN).toList();
     var inActives =
         groupWords.where((word) => word.doneStatus == DoneStatus.DONE).toList();
+    // actives.sort((a, b) => a.createdAt.compareTo(b.createdAt));
     activeWords(actives);
     inActiveWords(inActives);
   }

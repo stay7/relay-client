@@ -9,13 +9,17 @@ class Word {
   String meaning = '';
   String usage = '';
   String doneStatus;
+  DateTime createdAt;
+  DateTime updatedAt;
 
   Word.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         name = json['name'],
         meaning = json['meaning'],
         usage = json['usage'],
-        doneStatus = json['doneStatus'];
+        doneStatus = json['doneStatus'],
+        createdAt = json['createdAt'],
+        updatedAt = json['updatedAt'];
 
   Map<String, dynamic> toJson() => {
         'id': id.toString(),
