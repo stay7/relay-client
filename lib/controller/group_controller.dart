@@ -30,7 +30,10 @@ class GroupController extends GetxController {
     print('selectedGroupIndex,$selectedGroupIndex');
   }
 
-  Group get selectedGroup => groups[selectedGroupIndex.value];
+  Group get selectedGroup {
+    if (groups.isEmpty) throw FormatException('Group not exist');
+    return groups[selectedGroupIndex.value];
+  }
 
   List<Group> get unselectedGroups => groups
       .where((group) => group.id != groups[selectedGroupIndex.value].id)
@@ -44,7 +47,6 @@ class GroupController extends GetxController {
       final groupList = json.map((group) => Group.fromJson(group)).toList();
 
       if (groupList.length == 0) await addGroup('새 그룹');
-
       groupList.sort((b, a) => a.createdAt.compareTo(b.createdAt));
       groups(groupList);
       //TODO set latest selected group

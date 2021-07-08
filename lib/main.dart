@@ -10,6 +10,7 @@ import 'package:relay/config/color.dart';
 import 'package:relay/config/routes.dart';
 import 'package:relay/pages/add_word_page.dart';
 import 'package:relay/pages/edit_word_page.dart';
+import 'package:relay/pages/error_page.dart';
 import 'package:relay/pages/home_page.dart';
 import 'package:relay/pages/login_page.dart';
 import 'package:relay/pages/select_group_page.dart';
@@ -68,10 +69,11 @@ class MyApp extends StatelessWidget {
             transition: Transition.downToUp),
       ],
       builder: (BuildContext context, Widget? widget) {
-        Widget error = Text('...rendering error...');
-        if (widget is Scaffold || widget is Navigator)
-          error = Scaffold(body: Center(child: error));
-        ErrorWidget.builder = (FlutterErrorDetails errorDetails) => error;
+        ErrorWidget.builder = (FlutterErrorDetails errorDetails) {
+          return ErrorPage(
+            errorDetails: errorDetails,
+          );
+        };
         return widget!;
       },
     );

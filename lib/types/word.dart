@@ -18,8 +18,8 @@ class Word {
         meaning = json['meaning'],
         usage = json['usage'],
         doneStatus = json['doneStatus'],
-        createdAt = json['createdAt'],
-        updatedAt = json['updatedAt'];
+        createdAt = DateTime.parse(json['createdAt']),
+        updatedAt = DateTime.parse(json['updatedAt']);
 
   Map<String, dynamic> toJson() => {
         'id': id.toString(),
