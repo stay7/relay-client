@@ -62,4 +62,15 @@ class PreferenceProvider {
 
   saveKeepAddWord(bool isKeepAddWord) async =>
       await _sharedPref.setBool(PreferenceKey.KeepAddWord, isKeepAddWord);
+
+  /// 마지막으로 선택된 group id
+  saveSelectedGroupId(int groupId) async =>
+      await _sharedPref.setInt(PreferenceKey.LastSelectedGroupId, groupId);
+
+  int loadSelectedGroupId() {
+    int? id = _sharedPref.getInt(PreferenceKey.LastSelectedGroupId);
+    if (id != null) return id;
+
+    return -1;
+  }
 }

@@ -51,7 +51,7 @@ class LoginController extends GetxController {
     final responseJson = jsonDecode(response.body);
     await PreferenceProvider()
         .saveToken(responseJson['accessToken'], responseJson['refreshToken']);
-    isLogged(PreferenceProvider().hasToken());
+    isLogged(true);
   }
 
   logout() async {
