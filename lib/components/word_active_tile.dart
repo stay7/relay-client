@@ -7,23 +7,52 @@ import 'package:relay/config/routes.dart';
 import 'package:relay/controller/word_controller.dart';
 import 'package:relay/types/word.dart';
 
-class WordActiveTile extends StatelessWidget {
+class WordActiveTile extends StatefulWidget {
   final WordController _wordController = Get.find<WordController>();
   final Word word;
 
   WordActiveTile({Key? key, required this.word}) : super(key: key);
 
   @override
+  State<StatefulWidget> createState() => _WordActiveTileState();
+}
+
+class _WordActiveTileState extends State<WordActiveTile> {
+  bool isOpen = false;
+
+  @override
   Widget build(BuildContext context) {
+    Widget contentWidget = Container(
+      padding: EdgeInsets.symmetric(vertical: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (widget.word.meaning.isNotEmpty)
+            Text(
+              widget.word.meaning,
+              textAlign: TextAlign.right,
+              style: TextStyle(fontSize: 18),
+            ),
+          if (widget.word.usage.isNotEmpty)
+            Text(
+              widget.word.usage,
+              textAlign: TextAlign.right,
+              style: TextStyle(fontSize: 16),
+            )
+        ],
+      ),
+    );
+
     return Slidable(
-      key: Key(word.id.toString()),
+      key: Key(widget.word.id.toString()),
       actionPane: SlidableStrechActionPane(),
       dismissal: SlidableDismissal(
         dismissThresholds: <SlideActionType, double>{
           SlideActionType.primary: 1.0
         },
         child: SlidableDrawerDismissal(),
-        onDismissed: (actionType) => _wordController.dismissWord(word),
+        onDismissed: (actionType) =>
+            widget._wordController.dismissWord(widget.word),
       ),
       actions: <Widget>[
         IconSlideAction(
@@ -31,7 +60,7 @@ class WordActiveTile extends StatelessWidget {
           icon: Icons.delete_outlined,
           foregroundColor: MyColor.red,
           onTap: () {
-            _wordController.deleteWord(word);
+            widget._wordController.deleteWord(widget.word);
           },
         ),
         IconSlideAction(
@@ -39,7 +68,7 @@ class WordActiveTile extends StatelessWidget {
           icon: Icons.edit_outlined,
           foregroundColor: MyColor.black,
           onTap: () {
-            Get.toNamed(Routes.editWord, arguments: word);
+            Get.toNamed(Routes.editWord, arguments: widget.word);
           },
         ),
       ],
@@ -48,14 +77,17 @@ class WordActiveTile extends StatelessWidget {
           caption: 'Done',
           icon: Icons.done,
           foregroundColor: MyColor.green,
-          onTap: () => _wordController.dismissWord(word),
+          onTap: () => widget._wordController.dismissWord(widget.word),
         )
       ],
-      child: Container(
-        margin: EdgeInsets.symmetric(vertical: 8),
-        child: SizedBox(
-          width: double.infinity,
-          height: 90,
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            isOpen = !isOpen;
+          });
+        },
+        child: Container(
+          margin: EdgeInsets.symmetric(vertical: 8),
           child: Container(
             padding: EdgeInsets.all(15),
             decoration: BoxDecoration(
@@ -72,16 +104,18 @@ class WordActiveTile extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  word.name,
-                  textAlign: TextAlign.left,
-                  style: TextStyle(fontSize: 20),
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  child: Text(
+                    widget.word.name,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-                Text(
-                  word.meaning,
-                  textAlign: TextAlign.right,
-                  style: TextStyle(fontSize: 20),
-                ),
+                if (isOpen) contentWidget
               ],
             ),
           ),
