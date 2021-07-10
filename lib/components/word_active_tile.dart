@@ -4,10 +4,12 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:relay/config/color.dart';
 import 'package:relay/config/routes.dart';
+import 'package:relay/controller/group_controller.dart';
 import 'package:relay/controller/word_controller.dart';
 import 'package:relay/types/word.dart';
 
 class WordActiveTile extends StatefulWidget {
+  final GroupController _groupController = Get.find<GroupController>();
   final WordController _wordController = Get.find<WordController>();
   final Word word;
 
@@ -47,13 +49,15 @@ class _WordActiveTileState extends State<WordActiveTile> {
       key: Key(widget.word.id.toString()),
       actionPane: SlidableStrechActionPane(),
       dismissal: SlidableDismissal(
-        dismissThresholds: <SlideActionType, double>{
-          SlideActionType.primary: 1.0
-        },
-        child: SlidableDrawerDismissal(),
-        onDismissed: (actionType) =>
-            widget._wordController.dismissWord(widget.word),
-      ),
+          dismissThresholds: <SlideActionType, double>{
+            SlideActionType.primary: 1.0
+          },
+          child: SlidableDrawerDismissal(),
+          onDismissed: (actionType) {
+            widget.word.doneStatus = DoneStatus.DONE;
+            widget._groupController.currentGroup
+            .
+          }),
       actions: <Widget>[
         IconSlideAction(
           caption: 'Delete',

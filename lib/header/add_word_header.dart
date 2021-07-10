@@ -54,7 +54,7 @@ class GroupTitle extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Obx(() => Text('${controller.selectedGroup.name}',
+          Obx(() => Text('${controller.currentGroup.value.name}',
               style: TextStyle(fontSize: 18, color: MyColor.black))),
           Icon(Icons.arrow_drop_down_outlined),
         ],

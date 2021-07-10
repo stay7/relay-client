@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/instance_manager.dart';
 import 'package:relay/controller/config_controller.dart';
 import 'package:relay/controller/group_controller.dart';
@@ -38,6 +39,6 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset("assets/images/welcome.png");
+    return SvgPicture.asset('assets/images/logo.svg');
   }
 }

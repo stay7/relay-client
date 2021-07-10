@@ -28,7 +28,7 @@ class GroupTile extends StatelessWidget {
           decoration: BoxDecoration(
             color: MyColor.white,
             borderRadius: BorderRadius.circular(5),
-            border: groupController.selectedGroup == group
+            border: groupController.currentGroup.value == group
                 ? Border.all(color: MyColor.black, width: 1)
                 : null,
           ),

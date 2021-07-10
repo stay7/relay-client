@@ -14,40 +14,21 @@ class GroupController extends GetxController {
   final wordController = Get.find<WordController>();
   final RequestProvider request = RequestProvider();
 
-  RxInt selectedGroupIndex = 0.obs;
   RxList<Group> groups = List<Group>.empty(growable: true).obs;
-
-  @override
-  onInit() {
-    ever(selectedGroupIndex, (int index) {
-      wordController.classifyWord(groups[index].words);
-    });
-    super.onInit();
-  }
-
-  Group get selectedGroup {
-    if (groups.isEmpty) throw FormatException('Group not exist');
-    return groups[selectedGroupIndex.value];
-  }
-
-  List<Group> get unselectedGroups => groups
-      .where((group) => group.id != groups[selectedGroupIndex.value].id)
-      .toList();
+  late Rx<Group> currentGroup = Group(id: -1, name: 'null', words: []).obs;
 
   select(Group group) {
-    final index = groups.indexOf(group);
-    selectedGroupIndex(index);
+    currentGroup(group);
+    currentGroup.value.classifyWords();
     PreferenceProvider().saveSelectedGroupId(group.id);
   }
 
   selectLastSelectedGroup() {
     int lastSelectedGroupId = PreferenceProvider().loadSelectedGroupId();
 
-    if (lastSelectedGroupId >= 0) {
-      for (var i = 0; i < groups.length; i++) {
-        if (groups[i].id == lastSelectedGroupId) selectedGroupIndex(i);
-      }
-    }
+    Group lastGroup =
+        groups.singleWhere((group) => group.id == lastSelectedGroupId);
+    select(lastGroup);
   }
 
   getGroups() async {

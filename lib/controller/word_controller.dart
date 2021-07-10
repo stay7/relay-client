@@ -1,43 +1,40 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:relay/controller/group_controller.dart';
 import 'package:relay/provider/request_provider.dart';
 import 'package:relay/types/group.dart';
 import 'package:relay/types/word.dart';
 
 class WordController extends GetxController {
+  final GroupController _groupController = Get.find<GroupController>();
   final request = RequestProvider();
-  RxList<Word> activeWords = List<Word>.empty(growable: true).obs;
-  RxList<Word> inActiveWords = List<Word>.empty(growable: true).obs;
 
-  classifyWord(List<Word> groupWords) {
-    var actives =
-        groupWords.where((word) => word.doneStatus == DoneStatus.OPEN).toList();
-    var inActives =
-        groupWords.where((word) => word.doneStatus == DoneStatus.DONE).toList();
-    // actives.sort((a, b) => a.createdAt.compareTo(b.createdAt));
-    activeWords(actives);
-    inActiveWords(inActives);
-  }
-
-  dismissWord(Word word) {
-    word.doneStatus = DoneStatus.DONE;
-    this.inActiveWords.add(word);
-    this.activeWords.remove(word);
-  }
-
+  //TODO: group에 default를 currentGroup으로 하여 구현
   Future<Word> addWord(
       Group group, String name, String? meaning, String? usage) async {
     Uri url = Uri.parse('${RequestProvider.baseUrl}/words');
-    final response = await request.post(url,
-        body: jsonEncode({
-          'groupId': group.id,
-          'name': name,
-          'meaning': meaning,
-          'usage': usage
-        }));
+    final response = await request.post(
+      url,
+      body: jsonEncode({
+        'groupId': group.id,
+        'name': name,
+        'meaning': meaning,
+        'usage': usage
+      }),
+    );
     final responseJson = RequestProvider.returnResponse(response);
     return Word.fromJson(responseJson);
+  }
+
+  openWord(Word word) {
+    word.doneStatus = DoneStatus.OPEN;
+    updateWord(word);
+  }
+
+  doneWord(Word word) {
+    word.doneStatus = DoneStatus.DONE;
+    updateWord(word);
   }
 
   Future<Word> updateWord(Word word) async {
@@ -51,9 +48,5 @@ class WordController extends GetxController {
     Uri url = Uri.parse('${RequestProvider.baseUrl}/words/${word.id}');
     final response = await request.delete(url);
     final responseJson = RequestProvider.returnResponse(response);
-
-    //TODO check delete success
-    activeWords.remove(word);
-    inActiveWords.remove(word);
   }
 }

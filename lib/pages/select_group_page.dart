@@ -17,6 +17,10 @@ class SelectGroupPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var unselectedGroups = _groupController.groups
+        .where((group) => group.id != _groupController.currentGroup.value.id)
+        .toList();
+
     return Scaffold(
       appBar: AppHeader(
         leftIcon: IconButton(
@@ -37,17 +41,17 @@ class SelectGroupPage extends StatelessWidget {
                 child: Text('그룹을 선택해주세요', style: TextStyle(fontSize: 18)),
               ),
               Obx(
-                () => Container(
+                    () => Container(
                   margin: EdgeInsets.only(bottom: 28),
-                  child:
-                      GroupTile(_groupController.selectedGroup, onPressGroup),
+                  child: GroupTile(
+                      _groupController.currentGroup.value, onPressGroup),
                 ),
               ),
               Obx(
-                () => ListView.builder(
+                    () => ListView.builder(
                   itemCount: _groupController.groups.length - 1,
-                  itemBuilder: (_, index) => GroupTile(
-                      _groupController.unselectedGroups[index], onPressGroup),
+                  itemBuilder: (_, index) =>
+                      GroupTile(unselectedGroups[index], onPressGroup),
                   shrinkWrap: true,
                   scrollDirection: Axis.vertical,
                 ),

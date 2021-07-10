@@ -43,10 +43,11 @@ class WordList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => ListView.builder(
-        itemCount: wordController.activeWords.length,
+        itemCount: groupController.currentGroup.value.openWords.length,
         itemBuilder: (_, index) => WordActiveTile(
-          key: ValueKey('index_${wordController.activeWords[index].id}'),
-          word: wordController.activeWords[index],
+          key: ValueKey(
+              'index_${groupController.currentGroup.value.openWords[index].id}'),
+          word: groupController.currentGroup.value.openWords[index],
         ),
       ),
     );

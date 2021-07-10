@@ -16,22 +16,20 @@ class LoginController extends GetxController {
 
   @override
   onInit() {
-    ever(isLogged, (isLogged) {
-      fireRoute(isLogged);
-    });
+    ever(isLogged, fireRoute);
     Future.delayed(Duration(milliseconds: AppConfig.SplashDuration),
         () => isLogged(PreferenceProvider().hasToken()));
     super.onInit();
   }
 
   fireRoute(isLogged) async {
+    print('called fireRoute+$isLogged');
+
     if (isLogged) {
       final groupController = Get.find<GroupController>();
       await groupController.getGroups();
-      Get.snackbar('로그인 되었습니다.', '로그인 성공');
       Get.offNamed(Routes.home);
     } else {
-      Get.snackbar('로그인 실패.', '뭐야?');
       Get.offAllNamed(Routes.login);
     }
   }
@@ -56,7 +54,7 @@ class LoginController extends GetxController {
 
   logout() async {
     await PreferenceProvider().deleteToken();
-    isLogged.value = false;
+    isLogged(false);
   }
 
   renewAccessToken() async {
