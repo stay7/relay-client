@@ -41,14 +41,14 @@ class SelectGroupPage extends StatelessWidget {
                 child: Text('그룹을 선택해주세요', style: TextStyle(fontSize: 18)),
               ),
               Obx(
-                    () => Container(
+                () => Container(
                   margin: EdgeInsets.only(bottom: 28),
                   child: GroupTile(
                       _groupController.currentGroup.value, onPressGroup),
                 ),
               ),
               Obx(
-                    () => ListView.builder(
+                () => ListView.builder(
                   itemCount: _groupController.groups.length - 1,
                   itemBuilder: (_, index) =>
                       GroupTile(unselectedGroups[index], onPressGroup),

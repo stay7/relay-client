@@ -55,8 +55,7 @@ class _WordActiveTileState extends State<WordActiveTile> {
           child: SlidableDrawerDismissal(),
           onDismissed: (actionType) {
             widget.word.doneStatus = DoneStatus.DONE;
-            widget._groupController.currentGroup
-            .
+            widget._groupController.currentGroup;
           }),
       actions: <Widget>[
         IconSlideAction(
@@ -81,7 +80,7 @@ class _WordActiveTileState extends State<WordActiveTile> {
           caption: 'Done',
           icon: Icons.done,
           foregroundColor: MyColor.green,
-          onTap: () => widget._wordController.dismissWord(widget.word),
+          // onTap: () => widget._wordController.dismissWord(widget.word),
         )
       ],
       child: GestureDetector(

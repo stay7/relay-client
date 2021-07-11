@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/instance_manager.dart';
+import 'package:relay/config/config.dart';
 import 'package:relay/controller/config_controller.dart';
 import 'package:relay/controller/group_controller.dart';
 import 'package:relay/controller/login_controller.dart';
@@ -17,10 +17,16 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     loadDependencies();
+    Future.delayed(Duration(milliseconds: AppConfig.SplashDuration), () async {
+      LoginController loginController = Get.find<LoginController>();
+      bool isValidSession = await loginController.hasValidSession();
+      loginController.isLogged(isValidSession);
+    });
     super.initState();
   }
 
-  /*
+  loadDependencies() {
+    /*
     Controller 생성 순서 중요
     1. UI
     2. Word
@@ -28,17 +34,20 @@ class _SplashPageState extends State<SplashPage> {
     4. Login
     ...
    */
-  loadDependencies() {
     Get.put<UiController>(UiController(), permanent: true);
+    Get.put<LoginController>(LoginController(), permanent: true);
     Get.put<WordController>(WordController(), permanent: true);
     Get.put<GroupController>(GroupController(), permanent: true);
-    Get.put<LoginController>(LoginController(), permanent: true);
     Get.put<UserController>(UserController(), permanent: true);
     Get.put<ConfigController>(ConfigController(), permanent: true);
   }
 
   @override
   Widget build(BuildContext context) {
-    return SvgPicture.asset('assets/images/logo.svg');
+    return Container(
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/images/splash_background.jpg'))),
+    );
   }
 }

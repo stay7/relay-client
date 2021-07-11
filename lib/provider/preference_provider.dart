@@ -18,8 +18,9 @@ class PreferenceProvider {
   }
 
   /// Token
-  getAccessToken() => _accessToken;
-  getRefreshToken() => _refreshToken;
+  get accessToken => _accessToken;
+
+  get refreshToken => _refreshToken;
 
   setTokens(String accessToken, String refreshToken) {
     _accessToken = accessToken;

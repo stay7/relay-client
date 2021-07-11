@@ -20,13 +20,13 @@ class RequestProvider extends http.BaseClient {
 
   @override
   Future<StreamedResponse> send(BaseRequest request) async {
-    var accessToken = PreferenceProvider().getAccessToken();
-    var refreshToken = PreferenceProvider().getRefreshToken();
+    var accessToken = PreferenceProvider().accessToken;
+    var refreshToken = PreferenceProvider().refreshToken;
     if (JwtDecoder.isExpired(accessToken)) {
       if (!JwtDecoder.isExpired(refreshToken)) {
         await LoginController().renewAccessToken();
-        accessToken = PreferenceProvider().getAccessToken();
-        refreshToken = PreferenceProvider().getRefreshToken();
+        accessToken = PreferenceProvider().accessToken;
+        refreshToken = PreferenceProvider().refreshToken;
       } else {
         LoginController().logout();
       }
