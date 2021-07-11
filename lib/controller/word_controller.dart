@@ -1,13 +1,11 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
-import 'package:relay/controller/group_controller.dart';
 import 'package:relay/provider/request_provider.dart';
 import 'package:relay/types/group.dart';
 import 'package:relay/types/word.dart';
 
 class WordController extends GetxController {
-  final GroupController _groupController = Get.find<GroupController>();
   final request = RequestProvider();
 
   //TODO: group에 default를 currentGroup으로 하여 구현

@@ -4,39 +4,35 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferenceProvider {
   static final _preferenceProvider = PreferenceProvider._internal();
+
   factory PreferenceProvider() => _preferenceProvider;
 
   PreferenceProvider._internal();
+
   static late SharedPreferences _sharedPref;
 
-  String _accessToken = '';
-  String _refreshToken = '';
+  String accessToken = '';
+  String refreshToken = '';
 
   init() async {
     _sharedPref = await SharedPreferences.getInstance();
-    loadToken();
-  }
-
-  /// Token
-  get accessToken => _accessToken;
-
-  get refreshToken => _refreshToken;
-
-  setTokens(String accessToken, String refreshToken) {
-    _accessToken = accessToken;
-    _refreshToken = refreshToken;
   }
 
   hasToken() {
-    return _accessToken.isNotEmpty && _refreshToken.isNotEmpty;
+    if (accessToken.isEmpty && refreshToken.isEmpty) loadToken();
+    return accessToken.isNotEmpty && refreshToken.isNotEmpty;
   }
 
-  saveToken(String? accessToken, String? refreshToken) async {
-    if (accessToken == null || refreshToken == null) return;
+  saveToken({String accessToken = '', String refreshToken = ''}) {
+    if (accessToken.isNotEmpty) {
+      accessToken = accessToken;
+      _sharedPref.setString(PreferenceKey.AccessToken, accessToken);
+    }
 
-    await _sharedPref.setString(PreferenceKey.AccessToken, accessToken);
-    await _sharedPref.setString(PreferenceKey.RefreshToken, refreshToken);
-    setTokens(accessToken, refreshToken);
+    if (refreshToken.isNotEmpty) {
+      refreshToken = refreshToken;
+      _sharedPref.setString(PreferenceKey.RefreshToken, refreshToken);
+    }
   }
 
   deleteToken() async {
@@ -50,7 +46,8 @@ class PreferenceProvider {
 
     if (accessToken == null || refreshToken == null) return ['', ''];
 
-    setTokens(accessToken, refreshToken);
+    this.accessToken = accessToken;
+    this.refreshToken = refreshToken;
     return [accessToken, refreshToken];
   }
 

@@ -3,15 +3,11 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/state_manager.dart';
-import 'package:relay/controller/ui_controller.dart';
-import 'package:relay/controller/word_controller.dart';
 import 'package:relay/provider/preference_provider.dart';
 import 'package:relay/provider/request_provider.dart';
 import 'package:relay/types/group.dart';
 
 class GroupController extends GetxController {
-  final uiController = Get.find<UiController>();
-  final wordController = Get.find<WordController>();
   final RequestProvider request = RequestProvider();
 
   RxList<Group> groups = List<Group>.empty(growable: true).obs;

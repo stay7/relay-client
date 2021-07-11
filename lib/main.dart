@@ -18,6 +18,7 @@ import 'package:relay/pages/setting_page.dart';
 import 'package:relay/pages/splash_page.dart';
 import 'package:relay/provider/info_provider.dart';
 import 'package:relay/provider/preference_provider.dart';
+import 'package:relay/provider/request_provider.dart';
 
 void main() async {
   FlutterError.onError = (FlutterErrorDetails details) {
@@ -29,6 +30,7 @@ void main() async {
   await dotenv.load(fileName: envPath);
   await InfoProvider().loadDeviceInfo();
   await PreferenceProvider().init();
+  RequestProvider();
   await Firebase.initializeApp();
 
   WidgetsFlutterBinding.ensureInitialized();

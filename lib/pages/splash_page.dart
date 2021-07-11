@@ -26,19 +26,11 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   loadDependencies() {
-    /*
-    Controller 생성 순서 중요
-    1. UI
-    2. Word
-    3. Group
-    4. Login
-    ...
-   */
     Get.put<UiController>(UiController(), permanent: true);
-    Get.put<LoginController>(LoginController(), permanent: true);
-    Get.put<WordController>(WordController(), permanent: true);
     Get.put<GroupController>(GroupController(), permanent: true);
+    Get.put<WordController>(WordController(), permanent: true);
     Get.put<UserController>(UserController(), permanent: true);
+    Get.put<LoginController>(LoginController(), permanent: true);
     Get.put<ConfigController>(ConfigController(), permanent: true);
   }
 
@@ -46,8 +38,10 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/images/splash_background.jpg'))),
+        image: DecorationImage(
+          image: AssetImage('assets/images/splash_background.jpg'),
+        ),
+      ),
     );
   }
 }

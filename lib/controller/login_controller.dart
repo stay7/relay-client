@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:relay/config/config.dart';
 import 'package:relay/config/routes.dart';
 import 'package:relay/controller/group_controller.dart';
 import 'package:relay/provider/info_provider.dart';
@@ -30,12 +29,7 @@ class LoginController extends GetxController {
     if (!JwtDecoder.isExpired(accessToken)) return true;
     if (JwtDecoder.isExpired(refreshToken)) return false;
 
-    if (JwtDecoder.getRemainingTime(refreshToken) < AppConfig.refreshDeadline) {
-      await renewRefreshToken();
-      return true;
-    }
-
-    await renewAccessToken();
+    await renewToken(refreshToken);
     return true;
   }
 
@@ -61,7 +55,8 @@ class LoginController extends GetxController {
 
     final responseJson = jsonDecode(response.body);
     await prefProvider.saveToken(
-        responseJson['accessToken'], responseJson['refreshToken']);
+        accessToken: responseJson['accessToken'],
+        refreshToken: responseJson['refreshToken']);
     isLogged(true);
   }
 
@@ -70,8 +65,7 @@ class LoginController extends GetxController {
     isLogged(false);
   }
 
-  renewAccessToken() async {
-    final refreshToken = prefProvider.refreshToken;
+  renewToken(String refreshToken) async {
     Uri uri = Uri.parse('${RequestProvider.baseUrl}/auth/renew');
 
     final response = await http.post(
@@ -80,11 +74,8 @@ class LoginController extends GetxController {
       body: jsonEncode({'refreshToken': refreshToken}),
     );
     final responseJson = RequestProvider.returnResponse(response);
-    final accessToken = responseJson['accessToken'];
-    await prefProvider.saveToken(accessToken, refreshToken);
-  }
-
-  renewRefreshToken() async {
-    //TODO
+    prefProvider.saveToken(
+        accessToken: responseJson['accessToken'],
+        refreshToken: responseJson['refreshToken']);
   }
 }

@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
-import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:relay/controller/login_controller.dart';
 import 'package:relay/provider/preference_provider.dart';
 
@@ -20,17 +20,11 @@ class RequestProvider extends http.BaseClient {
 
   @override
   Future<StreamedResponse> send(BaseRequest request) async {
-    var accessToken = PreferenceProvider().accessToken;
-    var refreshToken = PreferenceProvider().refreshToken;
-    if (JwtDecoder.isExpired(accessToken)) {
-      if (!JwtDecoder.isExpired(refreshToken)) {
-        await LoginController().renewAccessToken();
-        accessToken = PreferenceProvider().accessToken;
-        refreshToken = PreferenceProvider().refreshToken;
-      } else {
-        LoginController().logout();
-      }
-    }
+    LoginController controller = Get.find<LoginController>();
+    if (!await controller.hasValidSession()) throw controller.isLogged(false);
+
+    String accessToken = PreferenceProvider().accessToken;
+
     request.headers['Content-Type'] = 'application/json';
     request.headers[HttpHeaders.authorizationHeader] = 'Bearer $accessToken';
     return this._client.send(request);
