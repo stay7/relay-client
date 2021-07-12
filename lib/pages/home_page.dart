@@ -63,10 +63,10 @@ class WordList extends StatelessWidget {
                     word: groupController
                         .doneWords[index - groupController.openWords.length]);
               },
-                ),
-              ),
-            ],
+            ),
           ),
+        ],
+      ),
     );
   }
 }
