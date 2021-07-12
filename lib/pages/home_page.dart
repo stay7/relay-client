@@ -42,31 +42,31 @@ class WordList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('home build()');
     return Obx(
       () => Column(
         children: [
           Expanded(
             child: ListView.builder(
-              itemCount: groupController.currentGroup.value.openWords.length +
-                  groupController.currentGroup.value.doneWords.length,
+              itemCount: groupController.openWords.length +
+                  groupController.doneWords.length,
               itemBuilder: (_, index) {
-                if (index <
-                    groupController.currentGroup.value.openWords.length) {
+                if (index < groupController.openWords.length) {
                   return WordActiveTile(
                     key: ValueKey(
-                        'index_${groupController.currentGroup.value.openWords[index].id}'),
-                    word: groupController.currentGroup.value.openWords[index],
+                        'index_${groupController.openWords[index].id}'),
+                    word: groupController.openWords[index],
                   );
                 }
 
                 return WordInActiveTile(
-                    word: groupController.currentGroup.value.doneWords[index -
-                        groupController.currentGroup.value.openWords.length]);
+                    word: groupController
+                        .doneWords[index - groupController.openWords.length]);
               },
-            ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 }

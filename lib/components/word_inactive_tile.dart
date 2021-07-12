@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:relay/config/color.dart';
+import 'package:relay/controller/group_controller.dart';
 import 'package:relay/controller/word_controller.dart';
 import 'package:relay/types/word.dart';
 
 class WordInActiveTile extends StatefulWidget {
   final Word word;
   final WordController _wordController = Get.find<WordController>();
+  final GroupController _groupController = Get.find<GroupController>();
 
   WordInActiveTile({required this.word});
 
@@ -18,6 +20,11 @@ class WordInActiveTile extends StatefulWidget {
 
 class _WordInActiveTileState extends State<WordInActiveTile> {
   bool isOpen = false;
+
+  markOpen() {
+    widget._wordController.openWord(widget.word);
+    widget._groupController.moveToOpen(widget.word);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +43,7 @@ class _WordInActiveTileState extends State<WordInActiveTile> {
           caption: 'Open',
           icon: Icons.done,
           foregroundColor: MyColor.green,
+          onTap: markOpen,
         )
       ],
       dismissal: SlidableDismissal(
@@ -43,9 +51,7 @@ class _WordInActiveTileState extends State<WordInActiveTile> {
           SlideActionType.primary: 1.0
         },
         child: SlidableDrawerDismissal(),
-        onDismissed: (actionType) {
-          widget._wordController.openWord(widget.word);
-        },
+        onDismissed: (actionType) => markOpen(),
       ),
       child: Container(
         margin: EdgeInsets.all(8),

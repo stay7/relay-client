@@ -29,4 +29,18 @@ class Group {
         doneWords.add(word);
     }
   }
+
+  moveToOpen(Word word) {
+    if (word.doneStatus == DoneStatus.OPEN && doneWords.contains(word)) {
+      openWords.add(word);
+      doneWords.remove(word);
+    }
+  }
+
+  moveToDone(Word word) {
+    if (word.doneStatus == DoneStatus.DONE && openWords.contains(word)) {
+      openWords.remove(word);
+      doneWords.insert(0, word);
+    }
+  }
 }

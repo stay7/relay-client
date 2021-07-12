@@ -22,6 +22,11 @@ class WordActiveTile extends StatefulWidget {
 class _WordActiveTileState extends State<WordActiveTile> {
   bool isOpen = false;
 
+  markDone() {
+    widget._wordController.doneWord(widget.word);
+    widget._groupController.moveToDone(widget.word);
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget contentWidget = Container(
@@ -53,10 +58,7 @@ class _WordActiveTileState extends State<WordActiveTile> {
           SlideActionType.primary: 1.0
         },
         child: SlidableDrawerDismissal(),
-        onDismissed: (actionType) {
-          widget._wordController.doneWord(widget.word);
-          widget._groupController.dismissWord(widget.word);
-        },
+        onDismissed: (actionType) => markDone(),
       ),
       actions: <Widget>[
         IconSlideAction(
@@ -81,7 +83,7 @@ class _WordActiveTileState extends State<WordActiveTile> {
           caption: 'Done',
           icon: Icons.done,
           foregroundColor: MyColor.green,
-          // onTap: () => widget._wordController.dismissWord(widget.word),
+          onTap: markDone,
         )
       ],
       child: GestureDetector(
