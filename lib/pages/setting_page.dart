@@ -21,6 +21,7 @@ class SettingPage extends StatelessWidget {
     try {
       await FlutterEmailSender.send(email);
     } catch (error) {
+      print(error);
       //TODO: show error dialog
     }
   }
@@ -53,7 +54,7 @@ class SettingPage extends StatelessWidget {
               SettingMenu(icon: Icon(Icons.settings_outlined), title: '시스템'),
               SettingMenuItem(
                 title: '문의',
-                onPress: openMail(),
+                onPress: openMail,
               ),
               SettingMenuItem(
                 title: '버전 정보',

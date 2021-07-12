@@ -43,6 +43,7 @@ class PreferenceProvider {
   loadToken() {
     var accessToken = _sharedPref.getString(PreferenceKey.AccessToken);
     var refreshToken = _sharedPref.getString(PreferenceKey.RefreshToken);
+    print(refreshToken);
 
     if (accessToken == null || refreshToken == null) return ['', ''];
 

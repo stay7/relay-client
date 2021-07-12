@@ -6,6 +6,7 @@ import 'package:get/state_manager.dart';
 import 'package:relay/provider/preference_provider.dart';
 import 'package:relay/provider/request_provider.dart';
 import 'package:relay/types/group.dart';
+import 'package:relay/types/word.dart';
 
 class GroupController extends GetxController {
   final RequestProvider request = RequestProvider();
@@ -17,6 +18,18 @@ class GroupController extends GetxController {
     currentGroup(group);
     currentGroup.value.classifyWords();
     PreferenceProvider().saveSelectedGroupId(group.id);
+  }
+
+  dismissWord(Word word) {
+    var group = currentGroup.value;
+
+    if (!group.openWords.contains(word)) return;
+
+    group.openWords.remove(word);
+    group.doneWords.insert(0, word);
+    print(group.openWords.length);
+    print(group.doneWords.length);
+    currentGroup(group);
   }
 
   selectLastSelectedGroup() {

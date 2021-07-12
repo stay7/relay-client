@@ -49,14 +49,15 @@ class _WordActiveTileState extends State<WordActiveTile> {
       key: Key(widget.word.id.toString()),
       actionPane: SlidableStrechActionPane(),
       dismissal: SlidableDismissal(
-          dismissThresholds: <SlideActionType, double>{
-            SlideActionType.primary: 1.0
-          },
-          child: SlidableDrawerDismissal(),
-          onDismissed: (actionType) {
-            widget.word.doneStatus = DoneStatus.DONE;
-            widget._groupController.currentGroup;
-          }),
+        dismissThresholds: <SlideActionType, double>{
+          SlideActionType.primary: 1.0
+        },
+        child: SlidableDrawerDismissal(),
+        onDismissed: (actionType) {
+          widget._wordController.doneWord(widget.word);
+          widget._groupController.dismissWord(widget.word);
+        },
+      ),
       actions: <Widget>[
         IconSlideAction(
           caption: 'Delete',

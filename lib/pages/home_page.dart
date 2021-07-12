@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 import 'package:get/route_manager.dart';
 import 'package:relay/components/word_active_tile.dart';
+import 'package:relay/components/word_inactive_tile.dart';
 import 'package:relay/config/color.dart';
 import 'package:relay/config/routes.dart';
 import 'package:relay/controller/group_controller.dart';
@@ -42,13 +43,29 @@ class WordList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => ListView.builder(
-        itemCount: groupController.currentGroup.value.openWords.length,
-        itemBuilder: (_, index) => WordActiveTile(
-          key: ValueKey(
-              'index_${groupController.currentGroup.value.openWords[index].id}'),
-          word: groupController.currentGroup.value.openWords[index],
-        ),
+      () => Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: groupController.currentGroup.value.openWords.length +
+                  groupController.currentGroup.value.doneWords.length,
+              itemBuilder: (_, index) {
+                if (index <
+                    groupController.currentGroup.value.openWords.length) {
+                  return WordActiveTile(
+                    key: ValueKey(
+                        'index_${groupController.currentGroup.value.openWords[index].id}'),
+                    word: groupController.currentGroup.value.openWords[index],
+                  );
+                }
+
+                return WordInActiveTile(
+                    word: groupController.currentGroup.value.doneWords[index -
+                        groupController.currentGroup.value.openWords.length]);
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
