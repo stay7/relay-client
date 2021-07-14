@@ -2,12 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
+import 'package:relay/components/group_tile.dart';
+import 'package:relay/components/icon_text_button.dart';
 import 'package:relay/config/color.dart';
 import 'package:relay/config/routes.dart';
 import 'package:relay/controller/group_controller.dart';
 import 'package:relay/controller/ui_controller.dart';
 import 'package:relay/dialogs/add_group_dialog.dart';
-import 'package:relay/components/group_tile.dart';
 import 'package:relay/header/app_header.dart';
 import 'package:relay/types/group.dart';
 
@@ -76,19 +77,14 @@ class AddGroupButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(5),
             ),
             padding: EdgeInsets.symmetric(horizontal: 10),
-            child: Row(children: [
-              Icon(
+            child: IconTextButton(
+              icon: Icon(
                 Icons.create_new_folder_outlined,
                 size: 24,
                 color: MyColor.blue,
               ),
-              Expanded(
-                child: Container(
-                  margin: EdgeInsets.only(left: 15),
-                  child: Text('Add Group'),
-                ),
-              )
-            ]),
+              name: '그룹 추가',
+            ),
           ),
         ),
       ),
