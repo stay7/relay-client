@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:relay/config/color.dart';
 import 'package:relay/config/routes.dart';
 import 'package:relay/pages/add_word_page.dart';
+import 'package:relay/pages/edit_group_page.dart';
 import 'package:relay/pages/edit_word_page.dart';
 import 'package:relay/pages/error_page.dart';
 import 'package:relay/pages/home_page.dart';
@@ -61,6 +62,10 @@ class MyApp extends StatelessWidget {
         GetPage(name: Routes.home, page: () => HomePage()),
         GetPage(name: Routes.addWord, page: () => AddWordPage()),
         GetPage(name: Routes.editWord, page: () => EditWordPage()),
+        GetPage(
+            name: Routes.editGroup,
+            page: () => EditGroupPage(),
+            transition: Transition.rightToLeft),
         GetPage(
             name: Routes.setting,
             page: () => SettingPage(),

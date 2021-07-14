@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:relay/config/color.dart';
 import 'package:relay/config/config.dart';
+import 'package:relay/config/routes.dart';
 import 'package:relay/controller/group_controller.dart';
 
 class HomeAppBar extends StatelessWidget with PreferredSizeWidget {
@@ -34,7 +36,12 @@ class HomeAppBar extends StatelessWidget with PreferredSizeWidget {
                   return Text('${groupController.currentGroup.value.name}',
                       style: TextStyle(color: MyColor.black));
                 }),
-                IconButton(onPressed: () {}, icon: Icon(Icons.search))
+                IconButton(
+                  icon: SvgPicture.asset('assets/icons/edit_folder.svg'),
+                  onPressed: () {
+                    Get.toNamed(Routes.editGroup);
+                  },
+                )
               ],
             )),
       ),
