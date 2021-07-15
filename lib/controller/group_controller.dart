@@ -53,6 +53,17 @@ class GroupController extends GetxController {
     select(lastGroup);
   }
 
+  updateGroup(Group group) async {
+    Uri uri = Uri.parse('${RequestProvider.baseUrl}/groups');
+    try {
+      var content = group.toJson();
+      final response = await request.patch(uri, body: jsonEncode(content));
+      final responseJson = RequestProvider.returnResponse(response);
+    } catch (error) {
+      print(error);
+    }
+  }
+
   getGroups() async {
     Uri uri = Uri.parse('${RequestProvider.baseUrl}/groups');
     try {

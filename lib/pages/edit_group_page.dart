@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:relay/components/back_icon.dart';
 import 'package:relay/components/group_edit_tile.dart';
 import 'package:relay/components/icon_text_button.dart';
+import 'package:relay/components/text_field_border.dart';
 import 'package:relay/config/color.dart';
 import 'package:relay/config/config.dart';
 import 'package:relay/controller/group_controller.dart';
@@ -25,7 +26,7 @@ class EditGroupPage extends StatefulWidget {
 class _EditGroupPageState extends State<EditGroupPage> {
   List<Word> trashWords = List<Word>.empty(growable: true);
   List<Word> words = List<Word>.empty(growable: true);
-  String groupName = '';
+  final _textController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +34,18 @@ class _EditGroupPageState extends State<EditGroupPage> {
     words = group.words
         .where((elemenet) => !trashWords.contains(elemenet))
         .toList();
-    groupName = widget.group.name;
+    _textController.text = group.name;
 
     saveGroup() {
-      widget._wordController.deleteWords(trashWords);
-      widget._groupController.deleteWords(trashWords);
+      if (trashWords.isNotEmpty) {
+        widget._wordController.deleteWords(trashWords);
+        widget._groupController.deleteWords(trashWords);
+      }
+      if (_textController.text != widget.group.name) {
+        print('rename');
+        group.name = _textController.text;
+        widget._groupController.updateGroup(group);
+      }
       Get.back();
     }
 
@@ -56,22 +64,22 @@ class _EditGroupPageState extends State<EditGroupPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             SvgPicture.asset('assets/images/folder.svg'),
+            TextFieldBorder(controller: _textController),
             Expanded(
               child: ListView.builder(
-                itemBuilder: (_, index) {
-                  return GroupEditTile(
-                    word: words[index],
-                    onPressed: () {
-                      print('onPressed ${words[index].name}');
-                      setState(() {
-                        trashWords.add(words[index]);
-                        words.remove(words[index]);
-                      });
-                    },
-                  );
-                },
-                itemCount: words.length,
-              ),
+                  itemBuilder: (_, index) {
+                    return GroupEditTile(
+                      word: words[index],
+                      onPressed: () {
+                        print('onPressed ${words[index].name}');
+                        setState(() {
+                          trashWords.add(words[index]);
+                          words.remove(words[index]);
+                        });
+                      },
+                    );
+                  },
+                  itemCount: words.length),
             ),
             IconTextButton(
               icon: Icon(

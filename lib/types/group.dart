@@ -18,6 +18,11 @@ class Group {
         createdAt = DateTime.parse(json['createdAt']),
         updatedAt = DateTime.parse(json['updatedAt']);
 
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+      };
+
   classifyWords() {
     openWords.clear();
     doneWords.clear();
