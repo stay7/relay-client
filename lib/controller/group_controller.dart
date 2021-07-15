@@ -16,28 +16,33 @@ class GroupController extends GetxController {
   RxList<Word> openWords = List<Word>.empty(growable: true).obs;
   RxList<Word> doneWords = List<Word>.empty(growable: true).obs;
 
+  setGroupWords() {
+    openWords(currentGroup.value.openWords);
+    doneWords(currentGroup.value.doneWords);
+    openWords.refresh();
+    doneWords.refresh();
+  }
+
   select(Group group) {
     currentGroup(group);
     currentGroup.value.classifyWords();
-    openWords(currentGroup.value.openWords);
-    doneWords(currentGroup.value.doneWords);
+    setGroupWords();
     PreferenceProvider().saveSelectedGroupId(group.id);
   }
 
   moveToDone(Word word) {
     currentGroup.value.moveToDone(word);
-    openWords(currentGroup.value.openWords);
-    doneWords(currentGroup.value.doneWords);
-    openWords.refresh();
-    doneWords.refresh();
+    setGroupWords();
   }
 
   moveToOpen(Word word) {
     currentGroup.value.moveToOpen(word);
-    openWords(currentGroup.value.openWords);
-    doneWords(currentGroup.value.doneWords);
-    openWords.refresh();
-    doneWords.refresh();
+    setGroupWords();
+  }
+
+  deleteWords(List<Word> words) {
+    currentGroup.value.deleteWords(words);
+    setGroupWords();
   }
 
   selectLastSelectedGroup() {

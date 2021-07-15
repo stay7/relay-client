@@ -23,8 +23,9 @@ class HomeAppBar extends StatelessWidget with PreferredSizeWidget {
             height: AppConfig.HeaderSize,
             decoration: const BoxDecoration(
               border: Border(
-                  top: BorderSide(color: MyColor.black, width: 1),
-                  bottom: BorderSide(color: MyColor.black, width: 1)),
+                top: BorderSide(color: MyColor.black, width: 1),
+                bottom: BorderSide(color: MyColor.black, width: 1),
+              ),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -39,7 +40,8 @@ class HomeAppBar extends StatelessWidget with PreferredSizeWidget {
                 IconButton(
                   icon: SvgPicture.asset('assets/icons/edit_folder.svg'),
                   onPressed: () {
-                    Get.toNamed(Routes.editGroup);
+                    Get.toNamed(Routes.editGroup,
+                        arguments: groupController.currentGroup.value);
                   },
                 )
               ],

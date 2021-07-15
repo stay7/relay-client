@@ -47,4 +47,13 @@ class WordController extends GetxController {
     final response = await request.delete(url);
     final responseJson = RequestProvider.returnResponse(response);
   }
+
+  deleteWords(List<Word> words) async {
+    List<int> wordIds = words.map((word) => word.id).toList();
+
+    Uri url = Uri.parse('${RequestProvider.baseUrl}/words/ids');
+    final response =
+        await request.delete(url, body: jsonEncode({'words': wordIds}));
+    final responseJson = RequestProvider.returnResponse(response);
+  }
 }

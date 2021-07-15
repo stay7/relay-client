@@ -30,6 +30,11 @@ class Group {
     }
   }
 
+  deleteWords(List<Word> words) {
+    this.words.removeWhere((word) => words.contains(word));
+    classifyWords();
+  }
+
   moveToOpen(Word word) {
     if (word.doneStatus == DoneStatus.OPEN && doneWords.contains(word)) {
       openWords.add(word);

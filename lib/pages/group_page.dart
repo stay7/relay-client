@@ -27,7 +27,15 @@ class GroupPage extends StatelessWidget {
         child: Column(
           children: [
             Expanded(child: GroupList()),
-            AddGroupButton(),
+            IconTextButton(
+              icon: Icon(
+                Icons.create_new_folder_outlined,
+                size: 24,
+                color: MyColor.blue,
+              ),
+              name: '그룹 추가',
+              onTap: () => Get.dialog(AddGroupDialog()),
+            ),
           ],
         ),
       ),
@@ -52,41 +60,6 @@ class GroupList extends StatelessWidget {
         itemCount: groupController.groups.length,
         itemBuilder: (context, index) =>
             GroupTile(groupController.groups[index], onPressGroup),
-      ),
-    );
-  }
-}
-
-class AddGroupButton extends StatelessWidget {
-  onPressAddGroup(BuildContext context) {
-    Get.dialog(AddGroupDialog());
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(left: 20, right: 20, bottom: 30),
-      child: SizedBox(
-        width: double.infinity,
-        height: 55,
-        child: GestureDetector(
-          onTap: () => onPressAddGroup(context),
-          child: Container(
-            decoration: BoxDecoration(
-              color: MyColor.white,
-              borderRadius: BorderRadius.circular(5),
-            ),
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            child: IconTextButton(
-              icon: Icon(
-                Icons.create_new_folder_outlined,
-                size: 24,
-                color: MyColor.blue,
-              ),
-              name: '그룹 추가',
-            ),
-          ),
-        ),
       ),
     );
   }

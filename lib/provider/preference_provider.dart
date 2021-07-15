@@ -25,12 +25,12 @@ class PreferenceProvider {
 
   saveToken({String accessToken = '', String refreshToken = ''}) {
     if (accessToken.isNotEmpty) {
-      accessToken = accessToken;
+      this.accessToken = accessToken;
       _sharedPref.setString(PreferenceKey.AccessToken, accessToken);
     }
 
     if (refreshToken.isNotEmpty) {
-      refreshToken = refreshToken;
+      this.refreshToken = refreshToken;
       _sharedPref.setString(PreferenceKey.RefreshToken, refreshToken);
     }
   }

@@ -45,7 +45,7 @@ class RequestProvider extends http.BaseClient {
         //TODO: 다시 요청
         throw ('401 에러');
       default:
-        throw ('${response.statusCode} 에러');
+        throw ('${response.statusCode} 에러 ${response.reasonPhrase}');
     }
   }
 }
