@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
+import 'package:get/get.dart';
 import 'package:relay/controller/login_controller.dart';
 import 'package:relay/types/social_provider.dart';
 
@@ -27,25 +28,30 @@ class SocialLoginButton extends StatelessWidget {
   }
 
   onPress(url) async {
+    final _loginController = Get.find<LoginController>();
     final result =
         await FlutterWebAuth.authenticate(url: url, callbackUrlScheme: "relay");
     final body = Uri.parse(result).queryParameters;
 
     final id = body['id'];
-    final code = body['code'];
-    await LoginController().login(id, code);
+    final tempToken = body['temp_token'];
+    _loginController.getToken(id, tempToken);
+
+    print(id);
+    print(tempToken);
   }
 
   static String getUrl(SocialProvider provider) {
+    final url = 'http://localhost:3000/auth';
     switch (provider) {
       case SocialProvider.GOOGLE:
-        return 'http://localhost:3000/auth/google';
+        return url + '/google';
       case SocialProvider.APPLE:
-        return 'http://localhost:3000/auth/apple';
+        return url + '/apple';
       case SocialProvider.FACEBOOK:
-        return 'http://localhost:3000/auth/facebook';
+        return url + '/facebook';
       case SocialProvider.KAKAO:
-        return 'http://localhost:3000/auth/kakao';
+        return url + '/kakao';
     }
   }
 

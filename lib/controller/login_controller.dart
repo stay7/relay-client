@@ -41,16 +41,20 @@ class LoginController extends GetxController {
     Get.offNamed(Routes.home);
   }
 
-  login(id, code) async {
-    Uri uri = Uri.parse('${RequestProvider.baseUrl}/auth/login');
+  getToken(id, tempToken) async {
+    Uri uri = Uri.parse('${RequestProvider.baseUrl}/auth/token');
 
     final response = await http.post(
       uri,
       headers: {
         HttpHeaders.contentTypeHeader: 'application/json',
-        HttpHeaders.authorizationHeader: 'Bearer $code'
+        HttpHeaders.authorizationHeader: 'Bearer $tempToken'
       },
-      body: jsonEncode({'id': '$id', 'deviceId': InfoProvider.deviceId}),
+      body: jsonEncode({
+        'id': '$id',
+        'deviceId': InfoProvider.deviceId,
+        'deviceName': InfoProvider.deviceName
+      }),
     );
 
     final responseJson = jsonDecode(response.body);
