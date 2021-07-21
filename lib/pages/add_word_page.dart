@@ -5,7 +5,7 @@ import 'package:relay/components/main_button.dart';
 import 'package:relay/components/page_title.dart';
 import 'package:relay/config/color.dart';
 import 'package:relay/controller/config_controller.dart';
-import 'package:relay/controller/group_controller.dart';
+import 'package:relay/controller/ui_controller.dart';
 import 'package:relay/controller/word_controller.dart';
 import 'package:relay/header/add_word_header.dart';
 import 'package:relay/types/group.dart';
@@ -22,7 +22,7 @@ class _AddWordPage extends State<AddWordPage> {
   final _editWordController = TextEditingController();
   final _editMeaningController = TextEditingController();
   final _editUsageController = TextEditingController();
-  final GroupController _groupController = Get.find<GroupController>();
+  final UiController _uiController = Get.find<UiController>();
   final WordController _wordController = Get.find<WordController>();
   final ConfigController _configController = Get.find<ConfigController>();
 
@@ -43,7 +43,7 @@ class _AddWordPage extends State<AddWordPage> {
     //TODO: check validation
     print('onPressSave');
 
-    final Group group = _groupController.currentGroup.value;
+    final Group group = _uiController.currentGroup.value;
     final Word word = await _wordController.addWord(
         group, _textName, _textMeaning, _textUsage);
     group.words.add(word);

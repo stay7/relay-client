@@ -7,7 +7,6 @@ import 'package:relay/components/word_active_tile.dart';
 import 'package:relay/components/word_inactive_tile.dart';
 import 'package:relay/config/color.dart';
 import 'package:relay/config/routes.dart';
-import 'package:relay/controller/group_controller.dart';
 import 'package:relay/controller/ui_controller.dart';
 import 'package:relay/controller/word_controller.dart';
 import 'package:relay/header/home_header.dart';
@@ -37,7 +36,7 @@ class HomePage extends StatelessWidget {
 }
 
 class WordList extends StatelessWidget {
-  final GroupController groupController = Get.find<GroupController>();
+  final UiController _uiController = Get.find<UiController>();
   final WordController wordController = Get.find<WordController>();
 
   @override
@@ -48,20 +47,19 @@ class WordList extends StatelessWidget {
         children: [
           Expanded(
             child: ListView.builder(
-              itemCount: groupController.openWords.length +
-                  groupController.doneWords.length,
+              itemCount: _uiController.openWords.length +
+                  _uiController.doneWords.length,
               itemBuilder: (_, index) {
-                if (index < groupController.openWords.length) {
+                if (index < _uiController.openWords.length) {
                   return WordActiveTile(
-                    key: ValueKey(
-                        'index_${groupController.openWords[index].id}'),
-                    word: groupController.openWords[index],
+                    key: ValueKey('index_${_uiController.openWords[index].id}'),
+                    word: _uiController.openWords[index],
                   );
                 }
 
                 return WordInActiveTile(
-                    word: groupController
-                        .doneWords[index - groupController.openWords.length]);
+                    word: _uiController
+                        .doneWords[index - _uiController.openWords.length]);
               },
             ),
           ),

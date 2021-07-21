@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 import 'package:relay/config/color.dart';
 import 'package:relay/config/config.dart';
 import 'package:relay/config/routes.dart';
-import 'package:relay/controller/group_controller.dart';
+import 'package:relay/controller/ui_controller.dart';
 
 class HomeAppBar extends StatelessWidget with PreferredSizeWidget {
-  final groupController = Get.find<GroupController>();
+  final _uiController = Get.find<UiController>();
   final Size _preferredSize;
 
   @override
@@ -34,14 +34,14 @@ class HomeAppBar extends StatelessWidget with PreferredSizeWidget {
                     onPressed: () => Scaffold.of(context).openDrawer(),
                     icon: Icon(Icons.menu)),
                 Obx(() {
-                  return Text('${groupController.currentGroup.value.name}',
+                  return Text('${_uiController.groupName}',
                       style: TextStyle(color: MyColor.black));
                 }),
                 IconButton(
                   icon: SvgPicture.asset('assets/icons/edit_folder.svg'),
                   onPressed: () {
                     Get.toNamed(Routes.editGroup,
-                        arguments: groupController.currentGroup.value);
+                        arguments: _uiController.currentGroup.value);
                   },
                 )
               ],

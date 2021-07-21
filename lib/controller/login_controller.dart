@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:relay/config/routes.dart';
 import 'package:relay/controller/group_controller.dart';
+import 'package:relay/controller/ui_controller.dart';
 import 'package:relay/provider/info_provider.dart';
 import 'package:relay/provider/preference_provider.dart';
 import 'package:relay/provider/request_provider.dart';
@@ -38,6 +39,9 @@ class LoginController extends GetxController {
 
     final groupController = Get.find<GroupController>();
     await groupController.getGroups();
+    final uiController = Get.find<UiController>();
+    uiController.selectLastSelectedGroup();
+
     Get.offNamed(Routes.home);
   }
 

@@ -4,7 +4,7 @@ import 'package:relay/components/back_icon.dart';
 import 'package:relay/config/color.dart';
 import 'package:relay/config/config.dart';
 import 'package:relay/config/routes.dart';
-import 'package:relay/controller/group_controller.dart';
+import 'package:relay/controller/ui_controller.dart';
 
 class AddWordHeader extends StatelessWidget with PreferredSizeWidget {
   final Size _preferredSize = Size.fromHeight(AppConfig.HeaderSize);
@@ -40,7 +40,7 @@ class AddWordHeader extends StatelessWidget with PreferredSizeWidget {
 }
 
 class GroupTitle extends StatelessWidget {
-  final GroupController controller = Get.find<GroupController>();
+  final UiController _uiController = Get.find<UiController>();
 
   handleTap() {
     Get.toNamed(Routes.selectGroup);
@@ -54,7 +54,7 @@ class GroupTitle extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Obx(() => Text('${controller.currentGroup.value.name}',
+          Obx(() => Text('${_uiController.groupName}',
               style: TextStyle(fontSize: 18, color: MyColor.black))),
           Icon(Icons.arrow_drop_down_outlined),
         ],

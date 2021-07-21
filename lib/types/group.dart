@@ -14,7 +14,9 @@ class Group {
   Group.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         name = json['name'],
-        words = json['words'].map<Word>((word) => Word.fromJson(word)).toList(),
+        words = json['words'] != null
+            ? json['words'].map<Word>((word) => Word.fromJson(word)).toList()
+            : [],
         createdAt = DateTime.parse(json['createdAt']),
         updatedAt = DateTime.parse(json['updatedAt']);
 
@@ -40,14 +42,14 @@ class Group {
     classifyWords();
   }
 
-  moveToOpen(Word word) {
+  moveWordToOpen(Word word) {
     if (word.doneStatus == DoneStatus.OPEN && doneWords.contains(word)) {
       openWords.add(word);
       doneWords.remove(word);
     }
   }
 
-  moveToDone(Word word) {
+  moveWordToDone(Word word) {
     if (word.doneStatus == DoneStatus.DONE && openWords.contains(word)) {
       openWords.remove(word);
       doneWords.insert(0, word);

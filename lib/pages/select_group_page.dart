@@ -4,21 +4,23 @@ import 'package:get/get.dart';
 import 'package:relay/components/group_tile.dart';
 import 'package:relay/config/color.dart';
 import 'package:relay/controller/group_controller.dart';
+import 'package:relay/controller/ui_controller.dart';
 import 'package:relay/header/app_header.dart';
 import 'package:relay/types/group.dart';
 
 class SelectGroupPage extends StatelessWidget {
   final GroupController _groupController = Get.find<GroupController>();
+  final UiController _uiController = Get.find<UiController>();
 
   onPressGroup(Group group) {
-    _groupController.select(group);
+    _uiController.select(group);
     Get.back();
   }
 
   @override
   Widget build(BuildContext context) {
     var unselectedGroups = _groupController.groups
-        .where((group) => group.id != _groupController.currentGroup.value.id)
+        .where((group) => group.id != _uiController.currentGroup.value.id)
         .toList();
 
     return Scaffold(
@@ -43,8 +45,8 @@ class SelectGroupPage extends StatelessWidget {
               Obx(
                 () => Container(
                   margin: EdgeInsets.only(bottom: 28),
-                  child: GroupTile(
-                      _groupController.currentGroup.value, onPressGroup),
+                  child:
+                      GroupTile(_uiController.currentGroup.value, onPressGroup),
                 ),
               ),
               Obx(

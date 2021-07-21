@@ -9,7 +9,7 @@ import 'package:relay/components/text_field_border.dart';
 import 'package:relay/config/color.dart';
 import 'package:relay/config/config.dart';
 import 'package:relay/config/routes.dart';
-import 'package:relay/controller/group_controller.dart';
+import 'package:relay/controller/ui_controller.dart';
 import 'package:relay/controller/word_controller.dart';
 import 'package:relay/header/app_header.dart';
 import 'package:relay/types/group.dart';
@@ -20,7 +20,7 @@ class EditWordPage extends StatefulWidget {
 }
 
 class _EditWordPage extends State<EditWordPage> {
-  final GroupController _groupController = Get.find<GroupController>();
+  final UiController _uiController = Get.find<UiController>();
   final WordController _wordController = Get.find<WordController>();
   late final TextEditingController _nameController;
   late final TextEditingController _meaningController;
@@ -36,7 +36,7 @@ class _EditWordPage extends State<EditWordPage> {
     _meaningController = new TextEditingController(text: word.meaning);
     _usageController = new TextEditingController(text: word.usage);
     isChecked = word.doneStatus == DoneStatus.DONE;
-    group = _groupController.currentGroup.value;
+    group = _uiController.currentGroup.value;
 
     super.initState();
   }
@@ -55,7 +55,7 @@ class _EditWordPage extends State<EditWordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppHeader(
-        title: _groupController.currentGroup.value.name,
+        title: _uiController.groupName,
         leftIcon: BackIconButton(),
       ),
       body: Container(

@@ -44,12 +44,12 @@ class GroupPage extends StatelessWidget {
 }
 
 class GroupList extends StatelessWidget {
-  final GroupController groupController = Get.find<GroupController>();
-  final UiController uiController = Get.find<UiController>();
+  final GroupController _groupController = Get.find<GroupController>();
+  final UiController _uiController = Get.find<UiController>();
 
   onPressGroup(Group group) {
-    groupController.select(group);
-    uiController.closeDrawer();
+    _uiController.select(group);
+    _uiController.closeDrawer();
   }
 
   @override
@@ -57,9 +57,9 @@ class GroupList extends StatelessWidget {
     return Obx(
       () => ListView.builder(
         padding: const EdgeInsets.only(left: 18, right: 18),
-        itemCount: groupController.groups.length,
+        itemCount: _groupController.groups.length,
         itemBuilder: (context, index) =>
-            GroupTile(groupController.groups[index], onPressGroup),
+            GroupTile(_groupController.groups[index], onPressGroup),
       ),
     );
   }

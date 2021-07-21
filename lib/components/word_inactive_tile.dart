@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:relay/config/color.dart';
-import 'package:relay/controller/group_controller.dart';
+import 'package:relay/controller/ui_controller.dart';
 import 'package:relay/controller/word_controller.dart';
 import 'package:relay/types/word.dart';
 
 class WordInActiveTile extends StatefulWidget {
   final Word word;
   final WordController _wordController = Get.find<WordController>();
-  final GroupController _groupController = Get.find<GroupController>();
+  final UiController _uiController = Get.find<UiController>();
 
   WordInActiveTile({required this.word});
 
@@ -22,8 +22,9 @@ class _WordInActiveTileState extends State<WordInActiveTile> {
   bool isOpen = false;
 
   markOpen() {
-    widget._wordController.openWord(widget.word);
-    widget._groupController.moveToOpen(widget.word);
+    final word = widget.word;
+    widget._wordController.openWord(word);
+    widget._uiController.currentGroup.value.moveWordToOpen(word);
   }
 
   @override

@@ -9,6 +9,7 @@ import 'package:relay/components/text_field_border.dart';
 import 'package:relay/config/color.dart';
 import 'package:relay/config/config.dart';
 import 'package:relay/controller/group_controller.dart';
+import 'package:relay/controller/ui_controller.dart';
 import 'package:relay/controller/word_controller.dart';
 import 'package:relay/header/app_header.dart';
 import 'package:relay/types/group.dart';
@@ -17,6 +18,7 @@ import 'package:relay/types/word.dart';
 class EditGroupPage extends StatefulWidget {
   final Group group = Get.arguments;
   final GroupController _groupController = Get.find<GroupController>();
+  final UiController _uiController = Get.find<UiController>();
   final WordController _wordController = Get.find<WordController>();
 
   @override
@@ -36,15 +38,15 @@ class _EditGroupPageState extends State<EditGroupPage> {
         .toList();
     _textController.text = group.name;
 
-    saveGroup() {
+    saveGroup() async {
       if (trashWords.isNotEmpty) {
         widget._wordController.deleteWords(trashWords);
-        widget._groupController.deleteWords(trashWords);
+        widget._uiController.deleteWords(trashWords);
       }
       if (_textController.text != widget.group.name) {
-        print('rename');
         group.name = _textController.text;
-        widget._groupController.updateGroup(group);
+        await widget._groupController.updateGroup(group);
+        widget._uiController.refreshCurrentGroup();
       }
       Get.back();
     }
