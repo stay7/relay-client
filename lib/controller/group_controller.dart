@@ -47,4 +47,11 @@ class GroupController extends GetxController {
     groups.add(group);
     return group;
   }
+
+  deleteGroup(Group group) async {
+    Uri uri = Uri.parse('${RequestProvider.baseUrl}/groups/${group.id}');
+    final response = await request.delete(uri);
+    final responseJson = RequestProvider.returnResponse(response);
+    return responseJson['affected'] == 1;
+  }
 }
