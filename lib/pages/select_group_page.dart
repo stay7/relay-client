@@ -18,7 +18,7 @@ class SelectGroupPage extends GetView<UiController> {
 
   @override
   Widget build(BuildContext context) {
-    var unselectedGroups = _groupController.groups
+    var unselectedGroups = _groupController.state!
         .where((group) => group.id != controller.state!.id)
         .toList();
 
@@ -48,12 +48,15 @@ class SelectGroupPage extends GetView<UiController> {
                 ),
                 onEmpty: null,
               ),
-              ListView.builder(
-                itemCount: _groupController.groups.length - 1,
-                itemBuilder: (_, index) =>
-                    GroupTile(unselectedGroups[index], onPressGroup),
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
+              _groupController.obx(
+                (state) => ListView.builder(
+                  itemCount: _groupController.state!.length - 1,
+                  itemBuilder: (_, index) =>
+                      GroupTile(unselectedGroups[index], onPressGroup),
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                ),
+                onEmpty: null,
               ),
             ],
           ),

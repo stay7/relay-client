@@ -22,7 +22,7 @@ class UiController extends GetxController with StateMixin<Group> {
   reloadGroup() {
     final _groupController = Get.find<GroupController>();
     final group =
-        _groupController.groups.singleWhere((group) => group.id == state!.id);
+        _groupController.state!.singleWhere((group) => group.id == state!.id);
     change(group);
   }
 
@@ -60,7 +60,7 @@ class UiController extends GetxController with StateMixin<Group> {
     int lastSelectedGroupId = PreferenceProvider().loadSelectedGroupId();
 
     try {
-      final lastSelectedGroup = _groupController.groups
+      final lastSelectedGroup = _groupController.state!
           .singleWhere((group) => group.id == lastSelectedGroupId);
       select(lastSelectedGroup);
     } on StateError {
