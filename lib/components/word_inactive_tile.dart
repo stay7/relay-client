@@ -24,7 +24,7 @@ class _WordInActiveTileState extends State<WordInActiveTile> {
   markOpen() {
     final word = widget.word;
     widget._wordController.openWord(word);
-    widget._uiController.currentGroup.value.moveWordToOpen(word);
+    widget._uiController.currentGroup!.value.moveWordToOpen(word);
   }
 
   @override

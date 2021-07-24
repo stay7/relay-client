@@ -11,6 +11,7 @@ import 'package:relay/config/config.dart';
 import 'package:relay/controller/group_controller.dart';
 import 'package:relay/controller/ui_controller.dart';
 import 'package:relay/controller/word_controller.dart';
+import 'package:relay/dialogs/delete_group_dialog.dart';
 import 'package:relay/header/app_header.dart';
 import 'package:relay/types/group.dart';
 import 'package:relay/types/word.dart';
@@ -29,14 +30,31 @@ class _EditGroupPageState extends State<EditGroupPage> {
   List<Word> trashWords = List<Word>.empty(growable: true);
   List<Word> words = List<Word>.empty(growable: true);
   final _textController = TextEditingController();
+  String groupName = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _textController.text = widget.group.name;
+    _textController.addListener(() {
+      setState(() {
+        groupName = _textController.text;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final group = widget.group;
-    words = group.words
-        .where((elemenet) => !trashWords.contains(elemenet))
-        .toList();
-    _textController.text = group.name;
+    words = group.words.where((word) => !trashWords.contains(word)).toList();
+
+    bool isEdited = (group.name != groupName) || trashWords.isNotEmpty;
 
     saveGroup() async {
       if (trashWords.isNotEmpty) {
@@ -55,7 +73,10 @@ class _EditGroupPageState extends State<EditGroupPage> {
       appBar: AppHeader(
         leftIcon: BackIconButton(),
         rightIcon: IconButton(
-          icon: Icon(Icons.done_outlined),
+          icon: Icon(
+            Icons.done_outlined,
+            color: isEdited ? MyColor.green : MyColor.black,
+          ),
           onPressed: saveGroup,
         ),
       ),
@@ -65,8 +86,16 @@ class _EditGroupPageState extends State<EditGroupPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SvgPicture.asset('assets/images/folder.svg'),
-            TextFieldBorder(controller: _textController),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 17),
+              child: SvgPicture.asset(
+                'assets/images/folder.svg',
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 40),
+              child: TextFieldBorder(controller: _textController),
+            ),
             Expanded(
               child: ListView.builder(
                   itemBuilder: (_, index) {
@@ -90,6 +119,7 @@ class _EditGroupPageState extends State<EditGroupPage> {
                 color: MyColor.red,
               ),
               name: '그룹 삭제',
+              onTap: () => Get.dialog(DeleteGroupDialog()),
             )
           ],
         ),

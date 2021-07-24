@@ -25,7 +25,7 @@ class _WordActiveTileState extends State<WordActiveTile> {
   markDone() {
     final word = widget.word;
     widget._wordController.doneWord(word);
-    widget._uiController.currentGroup.value.moveWordToDone(word);
+    widget._uiController.currentGroup!.value.moveWordToDone(word);
   }
 
   @override

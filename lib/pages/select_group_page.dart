@@ -20,7 +20,7 @@ class SelectGroupPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var unselectedGroups = _groupController.groups
-        .where((group) => group.id != _uiController.currentGroup.value.id)
+        .where((group) => group.id != _uiController.currentGroup!.value.id)
         .toList();
 
     return Scaffold(
@@ -45,8 +45,8 @@ class SelectGroupPage extends StatelessWidget {
               Obx(
                 () => Container(
                   margin: EdgeInsets.only(bottom: 28),
-                  child:
-                      GroupTile(_uiController.currentGroup.value, onPressGroup),
+                  child: GroupTile(
+                      _uiController.currentGroup!.value, onPressGroup),
                 ),
               ),
               Obx(

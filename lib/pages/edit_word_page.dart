@@ -36,7 +36,7 @@ class _EditWordPage extends State<EditWordPage> {
     _meaningController = new TextEditingController(text: word.meaning);
     _usageController = new TextEditingController(text: word.usage);
     isChecked = word.doneStatus == DoneStatus.DONE;
-    group = _uiController.currentGroup.value;
+    group = _uiController.currentGroup!.value;
 
     super.initState();
   }
@@ -55,7 +55,7 @@ class _EditWordPage extends State<EditWordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppHeader(
-        title: _uiController.groupName,
+        title: _uiController.currentGroup!.value.name,
         leftIcon: BackIconButton(),
       ),
       body: Container(

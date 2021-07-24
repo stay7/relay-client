@@ -43,7 +43,7 @@ class _AddWordPage extends State<AddWordPage> {
     //TODO: check validation
     print('onPressSave');
 
-    final Group group = _uiController.currentGroup.value;
+    final Group group = _uiController.currentGroup!.value;
     final Word word = await _wordController.addWord(
         group, _textName, _textMeaning, _textUsage);
     group.words.add(word);
