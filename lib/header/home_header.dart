@@ -6,8 +6,7 @@ import 'package:relay/config/config.dart';
 import 'package:relay/config/routes.dart';
 import 'package:relay/controller/ui_controller.dart';
 
-class HomeAppBar extends StatelessWidget with PreferredSizeWidget {
-  final _uiController = Get.find<UiController>();
+class HomeAppBar extends GetView<UiController> with PreferredSizeWidget {
   final Size _preferredSize;
 
   @override
@@ -31,17 +30,21 @@ class HomeAppBar extends StatelessWidget with PreferredSizeWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 IconButton(
-                    onPressed: () => Scaffold.of(context).openDrawer(),
-                    icon: Icon(Icons.menu)),
-                Obx(() {
-                  return Text('${_uiController.groupName}',
-                      style: TextStyle(color: MyColor.black));
-                }),
+                  onPressed: () => Scaffold.of(context).openDrawer(),
+                  icon: Icon(Icons.menu),
+                ),
+                controller.obx(
+                  (state) => Text(
+                    state!.name,
+                    style: TextStyle(color: MyColor.black),
+                  ),
+                  onEmpty: Text(''),
+                ),
                 IconButton(
                   icon: SvgPicture.asset('assets/icons/edit_folder.svg'),
                   onPressed: () {
-                    Get.toNamed(Routes.editGroup,
-                        arguments: _uiController.currentGroup.value);
+                    if (controller.state == null) return;
+                    Get.toNamed(Routes.editGroup, arguments: controller.state);
                   },
                 )
               ],

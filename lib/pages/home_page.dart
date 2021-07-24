@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 import 'package:get/route_manager.dart';
+import 'package:relay/components/empty_group_icon.dart';
 import 'package:relay/components/word_active_tile.dart';
 import 'package:relay/components/word_inactive_tile.dart';
 import 'package:relay/config/color.dart';
@@ -12,18 +13,25 @@ import 'package:relay/controller/word_controller.dart';
 import 'package:relay/header/home_header.dart';
 import 'package:relay/pages/group_page.dart';
 
-class HomePage extends StatelessWidget {
-  final UiController uiController = Get.find<UiController>();
-
+class HomePage extends GetView<UiController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: uiController.scaffoldKey,
+      key: controller.scaffoldKey,
       appBar: HomeAppBar(),
       drawer: GroupPage(),
       body: Container(
         padding: EdgeInsets.all(15),
-        child: WordList(),
+        child: Column(
+          children: [
+            controller.obx(
+              (state) => Expanded(
+                child: WordList(),
+              ),
+              onEmpty: EmptyGroupIcon(),
+            )
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Get.toNamed(Routes.addWord),
@@ -41,30 +49,21 @@ class WordList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('home build()');
-    return Obx(
-      () => Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: _uiController.openWords.length +
-                  _uiController.doneWords.length,
-              itemBuilder: (_, index) {
-                if (index < _uiController.openWords.length) {
-                  return WordActiveTile(
-                    key: ValueKey('index_${_uiController.openWords[index].id}'),
-                    word: _uiController.openWords[index],
-                  );
-                }
+    return ListView.builder(
+      itemCount:
+          _uiController.openWords.length + _uiController.doneWords.length,
+      itemBuilder: (_, index) {
+        if (index < _uiController.openWords.length) {
+          return WordActiveTile(
+            key: ValueKey('index_${_uiController.openWords[index].id}'),
+            word: _uiController.openWords[index],
+          );
+        }
 
-                return WordInActiveTile(
-                    word: _uiController
-                        .doneWords[index - _uiController.openWords.length]);
-              },
-            ),
-          ),
-        ],
-      ),
+        return WordInActiveTile(
+            word: _uiController
+                .doneWords[index - _uiController.openWords.length]);
+      },
     );
   }
 }
