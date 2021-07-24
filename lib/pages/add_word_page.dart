@@ -8,7 +8,6 @@ import 'package:relay/controller/config_controller.dart';
 import 'package:relay/controller/ui_controller.dart';
 import 'package:relay/controller/word_controller.dart';
 import 'package:relay/header/add_word_header.dart';
-import 'package:relay/types/group.dart';
 import 'package:relay/types/word.dart';
 
 class AddWordPage extends StatefulWidget {
@@ -41,12 +40,11 @@ class _AddWordPage extends State<AddWordPage> {
 
   onPressSave() async {
     //TODO: check validation
-    print('onPressSave');
+    final group = _uiController.state;
 
-    final Group group = _uiController.currentGroup!.value;
     final Word word = await _wordController.addWord(
-        group, _textName, _textMeaning, _textUsage);
-    group.words.add(word);
+        group!, _textName, _textMeaning, _textUsage);
+    _uiController.addWord(word);
     clearEdit();
 
     if (!_configController.isKeepAddWord.value) Get.back();

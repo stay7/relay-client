@@ -64,7 +64,7 @@ class _EditGroupPageState extends State<EditGroupPage> {
       if (_textController.text != widget.group.name) {
         group.name = _textController.text;
         await widget._groupController.updateGroup(group);
-        widget._uiController.refreshCurrentGroup();
+        widget._uiController.reloadGroup();
       }
       Get.back();
     }

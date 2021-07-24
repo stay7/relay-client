@@ -8,52 +8,50 @@ import 'package:relay/types/word.dart';
 class UiController extends GetxController with StateMixin<Group> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
-  Rx<Group>? currentGroup;
   Rx<String> groupName = '그룹 선택'.obs;
   RxList<Word> openWords = List<Word>.empty(growable: true).obs;
   RxList<Word> doneWords = List<Word>.empty(growable: true).obs;
 
   setGroupWords() {
-    openWords(currentGroup!.value.openWords);
-    doneWords(currentGroup!.value.doneWords);
+    openWords(state!.openWords);
+    doneWords(state!.doneWords);
     openWords.refresh();
     doneWords.refresh();
   }
 
-  refreshCurrentGroup() {
+  reloadGroup() {
     final _groupController = Get.find<GroupController>();
-    final group = _groupController.groups
-        .singleWhere((group) => group.id == currentGroup!.value.id);
-    currentGroup!(group);
-    currentGroup!.refresh();
+    final group =
+        _groupController.groups.singleWhere((group) => group.id == state!.id);
+    change(group);
   }
 
   select(Group group) {
     change(group, status: RxStatus.success());
-    currentGroup = group.obs;
     groupName(group.name);
-    currentGroup!.value.classifyWords();
+    state!.classifyWords();
     setGroupWords();
     PreferenceProvider().saveSelectedGroupId(group.id);
   }
 
+  addWord(Word word) {
+    state!.words.add(word);
+  }
+
+  moveWordToOpen(Word word) {
+    state!.moveWordToOpen(word);
+  }
+
+  moveWordToDone(Word word) {
+    state!.moveWordToDone(word);
+  }
+
   clearGroup() {
     change(null, status: RxStatus.empty());
-    currentGroup = null;
-  }
-
-  setGroupWordDone(Group group, Word word) {
-    currentGroup!.value.moveWordToDone(word);
-    setGroupWords();
-  }
-
-  setGroupWordOpen(Group group, Word word) {
-    currentGroup!.value.moveWordToOpen(word);
-    setGroupWords();
   }
 
   deleteWords(List<Word> words) {
-    currentGroup!.value.deleteWords(words);
+    state!.deleteWords(words);
     setGroupWords();
   }
 

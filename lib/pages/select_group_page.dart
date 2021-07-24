@@ -8,19 +8,18 @@ import 'package:relay/controller/ui_controller.dart';
 import 'package:relay/header/app_header.dart';
 import 'package:relay/types/group.dart';
 
-class SelectGroupPage extends StatelessWidget {
+class SelectGroupPage extends GetView<UiController> {
   final GroupController _groupController = Get.find<GroupController>();
-  final UiController _uiController = Get.find<UiController>();
 
   onPressGroup(Group group) {
-    _uiController.select(group);
+    controller.select(group);
     Get.back();
   }
 
   @override
   Widget build(BuildContext context) {
     var unselectedGroups = _groupController.groups
-        .where((group) => group.id != _uiController.currentGroup!.value.id)
+        .where((group) => group.id != controller.state!.id)
         .toList();
 
     return Scaffold(
@@ -42,22 +41,20 @@ class SelectGroupPage extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: 20),
                 child: Text('그룹을 선택해주세요', style: TextStyle(fontSize: 18)),
               ),
-              Obx(
-                () => Container(
+              controller.obx(
+                (state) => Container(
                   margin: EdgeInsets.only(bottom: 28),
-                  child: GroupTile(
-                      _uiController.currentGroup!.value, onPressGroup),
+                  child: GroupTile(controller.state!, onPressGroup),
                 ),
+                onEmpty: null,
               ),
-              Obx(
-                () => ListView.builder(
-                  itemCount: _groupController.groups.length - 1,
-                  itemBuilder: (_, index) =>
-                      GroupTile(unselectedGroups[index], onPressGroup),
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                ),
-              )
+              ListView.builder(
+                itemCount: _groupController.groups.length - 1,
+                itemBuilder: (_, index) =>
+                    GroupTile(unselectedGroups[index], onPressGroup),
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+              ),
             ],
           ),
         ),

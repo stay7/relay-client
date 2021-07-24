@@ -34,7 +34,16 @@ class HomePage extends GetView<UiController> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Get.toNamed(Routes.addWord),
+        onPressed: () {
+          if (controller.state != null) {
+            Get.toNamed(Routes.addWord);
+          } else {
+            Get.snackbar('그룹 없음', '그룹을 먼저 선택해주세요');
+            Future.delayed(const Duration(milliseconds: 1000), () {
+              controller.openDrawer();
+            });
+          }
+        },
         child: Icon(Icons.add_circle_outlined, size: 40, color: MyColor.black),
         backgroundColor: MyColor.transparent,
         elevation: 0,

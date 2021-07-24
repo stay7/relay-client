@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:get/instance_manager.dart';
+import 'package:get/get.dart';
 import 'package:relay/config/color.dart';
-import 'package:relay/controller/group_controller.dart';
 import 'package:relay/controller/ui_controller.dart';
 import 'package:relay/types/group.dart';
 
-class GroupTile extends StatelessWidget {
-  final groupController = Get.find<GroupController>();
-  final _uiController = Get.find<UiController>();
-  final uiController = Get.find<UiController>();
+class GroupTile extends GetView<UiController> {
   late final Group group;
   final Function(Group)? onPress;
 
@@ -29,16 +25,13 @@ class GroupTile extends StatelessWidget {
           decoration: BoxDecoration(
             color: MyColor.white,
             borderRadius: BorderRadius.circular(5),
-            border: _uiController.currentGroup?.value == group
+            border: controller.state == group
                 ? Border.all(color: MyColor.black, width: 1)
                 : null,
           ),
           child: Row(
             children: [
-              Icon(
-                Icons.folder_open,
-                size: 24,
-              ),
+              Icon(Icons.folder_open, size: 24),
               Expanded(
                 child: Container(
                   margin: EdgeInsets.only(left: 17),
